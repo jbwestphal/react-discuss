@@ -5,32 +5,30 @@ import 'materialize-css/dist/css/materialize.min.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './components/Home'
-import ByCategories from './components/ByCategories'
+import ByCategory from './components/ByCategory'
+import NewPost from './components/NewPost'
 
 const Page = (props) => (
   <CSSTransition
     {...props}
     classNames="fade"
     timeout={300}
-    mountOnEnter={true}
-    unmountOnExit={true}
   />
 )
 
 const MainApp = (props) => {
   const locationKey = props.location.pathname
   return (
-    <section className="App">
+    <section className="App row">
       <Header />
       <main>
         <TransitionGroup>
           <Page key={locationKey}>
-            <div className="page-container">
-              <Switch location={props.location}>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/categories" component={ByCategories} />
-              </Switch>
-            </div>
+            <Switch location={props.location}>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/category/:id" component={ByCategory} />
+              <Route exact path="/new-post" component={NewPost} />
+            </Switch>
           </Page>
         </TransitionGroup>
       </main>

@@ -1,0 +1,18 @@
+nav {
+  background-color: #294156;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.nav-wrapper .btn {
+  margin-right: 0;
+  padding: 0 20px;
+}
+
+.nav-wrapper .btn .material-icons {
+  margin-left: 5px;
+}
+
+.nav-wrapper .active {
+  background-color: rgba(0,0,0,0.2);
+}
