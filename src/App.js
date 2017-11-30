@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import Home from './components/Home'
 import ByCategory from './components/ByCategory'
 import NewPost from './components/NewPost'
+import PostDetail from './components/PostDetail'
 
 const Page = (props) => (
   <CSSTransition
@@ -26,6 +27,11 @@ const MainApp = (props) => {
           <Page key={locationKey}>
             <Switch location={props.location}>
               <Route exact path="/" component={Home} />
+              <Route path="/posts/:postId" render={({match}) => (
+                <div>
+                  <PostDetail postId={match.params.postId} />
+                </div>
+              )} />
               <Route exact path="/category/:id" component={ByCategory} />
               <Route exact path="/new-post" component={NewPost} />
             </Switch>

@@ -39,6 +39,12 @@ main {
   opacity: 0;
 }
 
+/* Forms */
+.materialize-textarea {
+  height: 300px !important;
+}
+
+
 /* Fonts */
 @font-face {
   font-family: 'Material Icons';
