@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import * as PostsAPI from '../ReadableAPI'
 import Post from './Post'
 
@@ -25,8 +25,8 @@ class Home extends React.Component {
 
     return (
       <section className="page">
-        <div className="row">
-          <h4 className="page-title col s12">Your Pinned Posts</h4>
+        {/* <div className="row"> */}
+          {/* <h4 className="page-title col s12">Your Pinned Posts</h4>
           <div className="col s12 l6">
             <div className="card grey lighten-4">
               <div className="card-content">
@@ -41,8 +41,8 @@ class Home extends React.Component {
                 <a className="btn deep-orange lighten-1"><i className="material-icons">star</i> Rate</a>
               </div>
             </div>
-          </div>{/* item */}
-        </div>
+          </div>*/}
+        {/* </div> */}
         <div className="row">
           <h4 className="page-title col s12">List of Posts</h4>
 

@@ -16,3 +16,15 @@ nav {
 .nav-wrapper .active {
   background-color: rgba(0,0,0,0.2);
 }
+
+.header-dropdown .dropdown-categs {
+  padding: 0 15px;
+}
+
+.header-dropdown select {
+  height: 64px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  outline: none;
+}

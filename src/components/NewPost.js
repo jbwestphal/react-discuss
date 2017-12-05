@@ -1,4 +1,5 @@
 import React from 'react'
+import CategoriesDropdown from './CategoriesDropdown'
 
 class NewPost extends React.Component {
 
@@ -28,7 +29,7 @@ class NewPost extends React.Component {
     return (
       <section className="page container">
         <div className="row">
-          <div class="section">
+          <div className="section">
             <h4>Create a Post</h4>
           </div>
           <form className="col s12">
@@ -51,15 +52,7 @@ class NewPost extends React.Component {
               </div>
               <div className="col s6">
                 <label className="active">Categories</label>
-                <select
-                  name="category" className="browser-default"
-                  onChange={this.handleInputChange}
-                  value={this.state.category}>
-                  <option value="">Select an option</option>
-                  <option value="1">Categorie 1</option>
-                  <option value="2">Categorie 2</option>
-                  <option value="3">Categorie 3</option>
-                </select>
+                <CategoriesDropdown isLink={false} />
               </div>
               <div className="input-field col s12">
                 <textarea

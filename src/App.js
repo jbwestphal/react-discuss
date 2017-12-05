@@ -32,7 +32,11 @@ const MainApp = (props) => {
                   <PostDetail postId={match.params.postId} />
                 </div>
               )} />
-              <Route exact path="/category/:id" component={ByCategory} />
+
+              <Route path="/:categoryPath/posts" render={({match}) => (
+                <ByCategory categoryPath={match.params.categoryPath} />
+              )} />
+
               <Route exact path="/new-post" component={NewPost} />
             </Switch>
           </Page>

@@ -1,4 +1,4 @@
-import reducer from '../reducers'
+import reducer from './reducers'
 import { createStore, applyMiddleware, compose } from 'redux'
 
 const logger = store => next => action => {
