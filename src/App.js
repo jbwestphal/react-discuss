@@ -18,6 +18,7 @@ const Page = (props) => (
 )
 
 const MainApp = (props) => {
+
   const locationKey = props.location.pathname
   return (
     <section className="App row">
@@ -47,10 +48,15 @@ const MainApp = (props) => {
   )
 }
 
-const App = () => (
-  <BrowserRouter>
-    <Route path="/" component={MainApp} />
-  </BrowserRouter>
-)
+class App extends React.Component {
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Route path="/" component={MainApp} />
+      </BrowserRouter>
+    )
+  }
+}
 
 export default App
