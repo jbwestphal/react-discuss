@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getPosts } from '../ReadableAPI'
 import { listPosts } from '../actions'
-// import If from './If'
+import If from './If'
 
 class Post extends React.Component {
 
@@ -16,10 +16,21 @@ class Post extends React.Component {
   render() {
 
     const listAllPosts = this.props.listPosts.posts
+    const postCategory = this.props.filter
+    let listConditionalPosts = []
+
+    if(postCategory !== false) {
+      listConditionalPosts = listAllPosts && listAllPosts.filter((post) => {
+        return post.category === postCategory
+      })
+    } else {
+      listConditionalPosts = listAllPosts
+    }
 
     return (
       <div className="col s12 l6">
-        {listAllPosts && listAllPosts.map((post) => (
+        {listConditionalPosts && listConditionalPosts.map((post) => (
+
           <div className="card grey lighten-4" key={post.id}>
             <div className="card-content">
               <span className="card-title">{ post.title } &nbsp; <small><strong>Categoria:</strong> { post.category }</small></span>
@@ -34,24 +45,22 @@ class Post extends React.Component {
             </div>
           </div>
         ))}
+        <If test={listConditionalPosts && listConditionalPosts.length === 0}>
+          <p>No posts found in this category.</p>
+        </If>
       </div>
     )
   }
 }
 
-function mapStateToProps ({posts}) {
+const mapStateToProps = state => ({
+  listPosts: state.posts
+});
 
-  return {
-    listPosts: posts
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
+const mapDispatchToProps = dispatch => ({
     // "listAllPosts" is one props, could be any name
     // listPosts is the action
     listAllPosts: (data) => dispatch(listPosts(data)),
-  }
-}
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

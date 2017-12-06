@@ -50,7 +50,6 @@ function comments (state = {}, action) {
     //   // const {recipe} = action
 
     //   return {
-    //     // returning the current state with spread syntax
     //     ...state,
     //     id
     //   }

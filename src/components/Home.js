@@ -24,7 +24,7 @@ const Home = () => {
       {/* </div> */}
       <div className="row">
         <h4 className="page-title col s12">List of Posts</h4>
-          <Post />
+          <Post filter={false} />
       </div>
     </section>
   )
