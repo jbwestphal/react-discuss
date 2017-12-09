@@ -1,22 +1,31 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getPosts } from '../ReadableAPI'
-import { listPosts } from '../actions'
+import { listAllPosts, actionDispatchVote } from '../actions'
 import If from './If'
 
 class Post extends React.Component {
 
   componentDidMount() {
-    getPosts().then((posts) => {
-      this.props.listAllPosts(posts)
-    })
+    // dispatching an action to update the store
+    this.props.listAllPosts()
+  }
+
+  votePost(postId, vote) {
+    console.log(postId, vote)
+
+    this.props.voteOnPost(postId, vote)
   }
 
   render() {
 
+    // getting the store up-to-date
     const listAllPosts = this.props.listPosts.posts
+
+    // getting props to define the filter
     const postCategory = this.props.filter
+
+    // conditional for list all posts or posts by categories
     let listConditionalPosts = []
 
     if(postCategory !== false) {
@@ -41,7 +50,9 @@ class Post extends React.Component {
               <Link to={`posts/${post.id}`} className="btn orange lighten-1">More</Link> &nbsp;
               <a className="btn light-blue lighten-1"
                 ><i className="material-icons">turned_in_not</i> Fixed</a> &nbsp;
-              <a className="btn deep-orange lighten-1"><i className="material-icons">star</i> Rate</a>
+              <span className="btn-floating green" onClick={() => this.votePost(post.id, "upVote")}><i className="material-icons">thumb_up</i></span> &nbsp;
+              <span className="btn-floating red" onClick={() => this.votePost(post.id, "downVote")}><i className="material-icons">thumb_down</i></span> &nbsp;
+              <span>{post.voteScore}</span>
             </div>
           </div>
         ))}
@@ -60,7 +71,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     // "listAllPosts" is one props, could be any name
     // listPosts is the action
-    listAllPosts: (data) => dispatch(listPosts(data)),
+    listAllPosts: () => dispatch(listAllPosts()),
+    // vote on post
+    voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

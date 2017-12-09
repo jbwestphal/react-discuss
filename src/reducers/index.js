@@ -4,7 +4,8 @@ import {
     // ADD_POST,
     // REMOVE_POST
     PINNED_POST,
-    LIST_POSTS
+    LIST_POSTS,
+    VOTE_POST
 } from '../actions'
 
 function posts (state = {}, action) {
@@ -32,6 +33,15 @@ function posts (state = {}, action) {
         ...state,
         posts
       }
+
+    case VOTE_POST:
+      const { postId, vote } = action
+      return {
+        ...state,
+        postId,
+        vote
+      }
+
     case PINNED_POST:
       const { id } = action
       return {
