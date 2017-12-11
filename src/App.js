@@ -38,7 +38,14 @@ const MainApp = (props) => {
                 <ByCategory categoryPath={match.params.categoryPath} />
               )} />
 
-              <Route exact path="/new-post" component={NewPost} />
+              <Route path="/new-post" render={({ history }) => (
+                <NewPost
+                  onCreatePost={() => {
+                    history.push('/')
+                  }}
+                />
+              )} />
+
             </Switch>
           </Page>
         </TransitionGroup>

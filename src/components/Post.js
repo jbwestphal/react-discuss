@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { convertTimeStamp } from '../utils'
 import { listAllPosts, actionDispatchVote } from '../actions'
-// import * as ReadAPI from '../ReadableAPI'
 import If from './If'
 
 class Post extends React.Component {
@@ -41,7 +41,7 @@ class Post extends React.Component {
             <div className="card-content">
               <span className="card-title">{ post.title } &nbsp; <small><strong>Categoria:</strong> { post.category }</small></span>
               <p className="grey-text truncate">{ post.body }</p><br/>
-              <p><strong>Author:</strong> { post.author } &nbsp; | &nbsp; <strong>Published:</strong> { post.timestamp }</p>
+              <p><strong>Author:</strong> { post.author } &nbsp; | &nbsp; <strong>Published:</strong> {convertTimeStamp(post.timestamp)}</p>
             </div>
             <div className="card-action">
               <Link to={`posts/${post.id}`} className="btn orange lighten-1">More</Link> &nbsp;

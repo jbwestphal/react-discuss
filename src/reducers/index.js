@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 import {
     ADD_POST,
     // REMOVE_POST
-    PINNED_POST,
     LIST_POSTS,
     VOTE_POST
 } from '../actions'
@@ -18,11 +17,7 @@ function posts (state = [], action) {
         ...state,
         action.post
       ]
-    // case REMOVE_POST:
-    //   return {
-    //     ...state,
-    //     id
-    //   }
+
     case LIST_POSTS:
       return posts
 
@@ -35,13 +30,6 @@ function posts (state = [], action) {
             ? {...item, voteScore: action.result.voteScore}
             : item
       )
-
-    case PINNED_POST:
-      const { id } = action
-      return {
-        ...state,
-        id
-      }
 
     // case DELETED:
     //     const { comment } = action;

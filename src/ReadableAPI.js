@@ -25,18 +25,14 @@ export const removePost = (postId) =>
     .then(res => res.json())
     .then(data => data)
 
-export const createPost = (id, title, author, body, category) =>
-  fetch(`${api}/posts/${id}`, {
+export const createPost = (post) =>
+  fetch(`${api}/posts`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    id,
-    timestamp: Date.now(),
-    title,
-    author,
-    body
+    body: JSON.stringify(post),
   }).then(res => res.json())
     .then(data => data)
 
@@ -86,6 +82,7 @@ export const editComment = (commentId, timestamp, body) =>
     method: 'PUT',
     headers : {
       ...headers,
+      'Content-Type': 'application/json'
     },
     timestamp,
     body

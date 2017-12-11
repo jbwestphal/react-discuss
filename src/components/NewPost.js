@@ -1,53 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
-import CategoriesDropdown from './CategoriesDropdown'
+import { getRandomId } from '../utils'
 import { actionAddPost } from '../actions'
+import CategoriesDropdown from './CategoriesDropdown'
 
 class NewPost extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '',
-      author: '',
-      category: '',
-      body: ''
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  handleInputChange(field) {
-    const target = field.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    // a importacao da biblioteca via npm do form-serialize
-    // ajuda no retorno de valores de um form para passar via javascript para a API
     const values = serializeForm(e.target, { hash: true })
-
-    console.log(values)
 
     this.props.createContact(values)
 
-  }
+    if (this.props.onCreatePost)
+      this.props.onCreatePost()
 
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
   }
 
   render() {
+    let timestamp = Date.now()
     return (
       <section className="page container">
         <div className="row">
@@ -55,20 +28,19 @@ class NewPost extends React.Component {
             <h4>Create a Post</h4>
           </div>
           <form className="col s12" onSubmit={this.handleSubmit}>
-            <input type="hidden" name="id" defaultValue={this.getRandomInt(1,1000)} />
+            <input type="hidden" name="id" defaultValue={getRandomId()} />
+            <input type="hidden" name="timestamp" defaultValue={timestamp} />
             <div className="row">
               <div className="input-field col s12">
                 <input
                   id="title" type="text" className="validate"
-                  name="title"
-                  defaultValue={this.state.title} />
+                  name="title" />
                 <label className="active">Title</label>
               </div>
               <div className="input-field col s6">
                 <input
                   id="title" type="text" className="validate"
-                  name="author"
-                  defaultValue={this.state.author} />
+                  name="author" />
                 <label className="active">Author</label>
               </div>
               <div className="col s6">
@@ -78,8 +50,7 @@ class NewPost extends React.Component {
               <div className="input-field col s12">
                 <textarea
                   id="description" className="validate materialize-textarea"
-                  name="body"
-                  defaultValue={this.state.body} />
+                  name="body" />
                 <label className="active">Text</label>
               </div>
               <div className="input-field col s12 right-align">

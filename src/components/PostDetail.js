@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 import * as postsAPI from '../ReadableAPI'
+import { convertTimeStamp } from '../utils'
 // import If from './If'
 
 class PostDetail extends Component {
@@ -19,13 +20,6 @@ class PostDetail extends Component {
 
 		const { post } = this.state
 
-		const date = new Date(post.timestamp*1000)
-		const dateDay = date.getDate()
-		const dateMonth = date.getMonth()+1
-		const dateYear = date.getFullYear()
-
-		const finalDate = dateDay+'/'+dateMonth+'/'+dateYear
-
 		return (
 			<section className="container post-detail">
 
@@ -35,7 +29,7 @@ class PostDetail extends Component {
 				<section>
 					<article className="post-detail-article">
 						<div>{post.body}</div>
-						<p><span className="grey-text">Published in:</span> {finalDate}</p>
+						<p><span className="grey-text">Published in:</span> {convertTimeStamp(post.timestamp)}</p>
 						<p><span className="grey-text">Author:</span> {post.author} &nbsp; <span className="grey-text">Category:</span> {post.category}</p>
 						<p><span className="grey-text">VoteScore:</span> {post.voteScore} &nbsp; <span className="grey-text">Comments:</span> {post.commentCount}</p>
 					</article>
