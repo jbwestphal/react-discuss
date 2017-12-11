@@ -1,46 +1,40 @@
 import { combineReducers } from 'redux'
 
 import {
-    // ADD_POST,
+    ADD_POST,
     // REMOVE_POST
     PINNED_POST,
     LIST_POSTS,
     VOTE_POST
 } from '../actions'
 
-function posts (state = {}, action) {
+function posts (state = [], action) {
 
-  const { posts, result, postId, voteScore } = action
+  const { posts } = action
 
   switch (action.type) {
-    // case ADD_POST:
-
-    // const { title, body, author } = action
-
-    //   return {
-    //     ...state, {
-    //     title,
-    //     body,
-    //     author
-    //   }
-    //
-    //   }
+    case ADD_POST:
+      return [
+        ...state,
+        action.post
+      ]
     // case REMOVE_POST:
     //   return {
     //     ...state,
     //     id
     //   }
     case LIST_POSTS:
-      return {
-        ...state,
-        posts
-      }
+      return posts
 
     case VOTE_POST:
+      // const {id_post, vote} = action
+      console.log(state.posts)
 
-      return {
-        ...state,
-      }
+      return state.map(item =>
+          (item.id === action.result.id)
+            ? {...item, voteScore: action.result.voteScore}
+            : item
+      )
 
     case PINNED_POST:
       const { id } = action
@@ -48,6 +42,23 @@ function posts (state = {}, action) {
         ...state,
         id
       }
+
+    // case DELETED:
+    //     const { comment } = action;
+    //     const { id, parentId } = comment;
+    //     return {
+    //       ...state,
+    //       [parentId]: state[parentId].filter(i => i !== id),
+    //     };
+    // case SAVED:
+    //   const { comment } = action;
+    //   const { parentId } = comment;
+
+    //   return {
+    //     ...state,
+    //     [parentId]: [...state[parentId] || [], comment.id],
+    //   };
+
     default:
       return state
   }

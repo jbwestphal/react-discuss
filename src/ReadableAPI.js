@@ -34,10 +34,11 @@ export const createPost = (id, title, author, body, category) =>
     },
     id,
     timestamp: Date.now(),
-    title: JSON.stringify(title),
-    author: JSON.stringify(author),
-    body: JSON.stringify(body)
+    title,
+    author,
+    body
   }).then(res => res.json())
+    .then(data => data)
 
 export const editPost = (postId, title, body) =>
   fetch(`${api}/posts/${postId}`, {

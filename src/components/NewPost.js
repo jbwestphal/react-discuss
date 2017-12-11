@@ -1,5 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import serializeForm from 'form-serialize'
 import CategoriesDropdown from './CategoriesDropdown'
+import { actionAddPost } from '../actions'
 
 class NewPost extends React.Component {
 
@@ -25,6 +28,25 @@ class NewPost extends React.Component {
     });
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    // a importacao da biblioteca via npm do form-serialize
+    // ajuda no retorno de valores de um form para passar via javascript para a API
+    const values = serializeForm(e.target, { hash: true })
+
+    console.log(values)
+
+    this.props.createContact(values)
+
+  }
+
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   render() {
     return (
       <section className="page container">
@@ -32,22 +54,21 @@ class NewPost extends React.Component {
           <div className="section">
             <h4>Create a Post</h4>
           </div>
-          <form className="col s12">
+          <form className="col s12" onSubmit={this.handleSubmit}>
+            <input type="hidden" name="id" defaultValue={this.getRandomInt(1,1000)} />
             <div className="row">
               <div className="input-field col s12">
                 <input
                   id="title" type="text" className="validate"
                   name="title"
-                  onChange={this.handleInputChange}
-                  value={this.state.title} />
+                  defaultValue={this.state.title} />
                 <label className="active">Title</label>
               </div>
               <div className="input-field col s6">
                 <input
                   id="title" type="text" className="validate"
                   name="author"
-                  onChange={this.handleInputChange}
-                  value={this.state.author} />
+                  defaultValue={this.state.author} />
                 <label className="active">Author</label>
               </div>
               <div className="col s6">
@@ -58,8 +79,7 @@ class NewPost extends React.Component {
                 <textarea
                   id="description" className="validate materialize-textarea"
                   name="body"
-                  onChange={this.handleInputChange}
-                  value={this.state.body} />
+                  defaultValue={this.state.body} />
                 <label className="active">Text</label>
               </div>
               <div className="input-field col s12 right-align">
@@ -74,4 +94,8 @@ class NewPost extends React.Component {
   }
 }
 
-export default NewPost
+const mapDispatchToProps = dispatch => ({
+    createContact: (post) => dispatch(actionAddPost(post)),
+});
+
+export default connect(null, mapDispatchToProps)(NewPost)

@@ -19,21 +19,28 @@ class PostDetail extends Component {
 
 		const { post } = this.state
 
+		const date = new Date(post.timestamp*1000)
+		const dateDay = date.getDate()
+		const dateMonth = date.getMonth()+1
+		const dateYear = date.getFullYear()
+
+		const finalDate = dateDay+'/'+dateMonth+'/'+dateYear
+
 		return (
 			<section className="container post-detail">
 
 				<header className="post-detail-header">
 					<h2 className="header grey-text">{post.title}</h2>
 				</header>
-
-				{/* <If test={ post.author !== undefined }> */}
-					<section>
-						<article className="post-detail-article">
-							<div>{post.body}</div>
-							<p><span className="grey-text">Author:</span> {post.author}</p>
-						</article>
-					</section>
-				{/* </If> */}
+				<section>
+					<article className="post-detail-article">
+						<div>{post.body}</div>
+						<p><span className="grey-text">Published in:</span> {finalDate}</p>
+						<p><span className="grey-text">Author:</span> {post.author} &nbsp; <span className="grey-text">Category:</span> {post.category}</p>
+						<p><span className="grey-text">VoteScore:</span> {post.voteScore} &nbsp; <span className="grey-text">Comments:</span> {post.commentCount}</p>
+					</article>
+				</section>
+				<h3 className="grey-text">Post's Comments</h3>
 			</section>
 		)
 	}

@@ -12,20 +12,10 @@ class Post extends React.Component {
     this.props.listAllPosts()
   }
 
-  // votePost(postId, vote) {
-  //   console.log(postId, vote)
-
-  //   this.props.voteOnPost(postId, vote)
-
-  //   // ReadAPI.voteOnPost(postId, vote).then(result => console.log(result));
-
-
-  // }
-
   render() {
 
     // getting the store up-to-date
-    const listAllPosts = this.props.listPosts.posts
+    const listAllPosts = this.props.listPosts
 
     // getting props to define the filter
     const postCategory = this.props.filter
@@ -81,7 +71,7 @@ const mapDispatchToProps = dispatch => ({
     // listPosts is the action
     listAllPosts: () => dispatch(listAllPosts()),
     // vote on post
-    voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote), listAllPosts()),
+    voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

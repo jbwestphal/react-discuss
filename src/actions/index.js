@@ -15,7 +15,7 @@ export const VOTE_POST = 'VOTE_POST'
 // 	}
 // }
 
-export const recievePosts = (posts = {}) => ({
+export const recievePosts = (posts) => ({
   type: LIST_POSTS,
   posts
 });
@@ -23,33 +23,38 @@ export const recievePosts = (posts = {}) => ({
 export const listAllPosts = (posts) => dispatch => (
   ReadAPI
 		.getPosts()
-		.then(posts => {
-			dispatch(recievePosts(posts))
+		.then(result => {
+			dispatch(recievePosts(result))
 		})
 );
 
-export const recieveVote = ({ result, id, voteScore }) => ({
+export const recieveVote = (result) => ({
   type: VOTE_POST,
-  id,
-	voteScore
+  result
 });
 
 export const actionDispatchVote = ({postId, vote}) => dispatch => (
   ReadAPI
 		.voteOnPost(postId, vote)
 		.then(result => {
-			dispatch(recieveVote(result, postId, vote))
+			dispatch(recieveVote(result))
 		})
 );
 
-export function addPost ({ title, body, author }) {
-	return {
-		type: ADD_POST,
-		title,
-		body,
-		author,
-	}
-}
+
+export const recievePostAdded = (post) => ({
+  type: ADD_POST,
+  post
+});
+
+export const actionAddPost = ({post}) => dispatch => (
+  ReadAPI
+		.createPost(post)
+		.then(result => {
+			dispatch(recievePostAdded(result))
+		})
+);
+
 
 export function removePost ({ id }) {
 	return {
