@@ -9,6 +9,9 @@ import {
 } from '../actions'
 
 function posts (state = {}, action) {
+
+  const { posts, result, postId, voteScore } = action
+
   switch (action.type) {
     // case ADD_POST:
 
@@ -28,18 +31,15 @@ function posts (state = {}, action) {
     //     id
     //   }
     case LIST_POSTS:
-      const { posts } = action
       return {
         ...state,
         posts
       }
 
     case VOTE_POST:
-      const { postId, vote } = action
+
       return {
         ...state,
-        postId,
-        vote
       }
 
     case PINNED_POST:

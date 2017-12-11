@@ -56,8 +56,10 @@ export const voteOnPost = (postId, vote) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    option: vote,
-  }).then(res => res.json())
+    body: JSON.stringify({ option: vote })
+  })
+    .then(res => res.json())
+    .then(data => data)
 
 export const getCommentsByPost = (postId) =>
   fetch(`${api}/posts/${postId}/comments`, { headers })

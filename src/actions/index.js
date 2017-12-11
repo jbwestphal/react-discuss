@@ -28,16 +28,17 @@ export const listAllPosts = (posts) => dispatch => (
 		})
 );
 
-export const recieveVote = (post) => ({
+export const recieveVote = ({ result, id, voteScore }) => ({
   type: VOTE_POST,
-  post
+  id,
+	voteScore
 });
 
-export const actionDispatchVote = (postId, vote) => dispatch => (
+export const actionDispatchVote = ({postId, vote}) => dispatch => (
   ReadAPI
 		.voteOnPost(postId, vote)
-		.then(post => {
-			dispatch(recieveVote(post))
+		.then(result => {
+			dispatch(recieveVote(result, postId, vote))
 		})
 );
 
