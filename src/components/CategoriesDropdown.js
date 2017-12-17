@@ -4,10 +4,6 @@ import { listAllCategories } from '../actions'
 
 class CategoriesDropdown extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   handleInputChange(field) {
     let href = this.props.isLink
     if( href ) {

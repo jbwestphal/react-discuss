@@ -41,7 +41,7 @@ main {
 
 /* Forms */
 .materialize-textarea {
-  height: 300px !important;
+  height: 120px !important;
 }
 
 
@@ -71,4 +71,15 @@ main {
   top: -2px;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+/* Common */
+.btn-floating,
+.card-action {
+  user-select: none;
+}
+
+/* Post detail */
+.post-detail {
+  padding: 40px 0;
 }

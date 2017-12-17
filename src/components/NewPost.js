@@ -25,7 +25,7 @@ class NewPost extends React.Component {
       <section className="page container">
         <div className="row">
           <div className="section">
-            <h4>Create a Post</h4>
+            <h4 className="page-title col s12">Create a Post</h4>
           </div>
           <form className="col s12" onSubmit={this.handleSubmit}>
             <input type="hidden" name="id" defaultValue={getRandomId()} />

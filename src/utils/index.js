@@ -9,7 +9,8 @@ export function getRandomId() {
 }
 
 export function convertTimeStamp(timestamp) {
-  const date = new Date(timestamp*1000)
+  const timeStamp = parseInt(timestamp, 0)
+  const date = new Date(timeStamp)
   const dateDay = date.getDate()
   const dateMonth = date.getMonth()+1
   const dateYear = date.getFullYear()
