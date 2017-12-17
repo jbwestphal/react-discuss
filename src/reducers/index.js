@@ -2,10 +2,20 @@ import { combineReducers } from 'redux'
 
 import {
     ADD_POST,
-    // REMOVE_POST
+    LIST_CATEGORIES,
     LIST_POSTS,
     VOTE_POST
+    // REMOVE_POST
 } from '../actions'
+
+function postCategories (state = [], action) {
+  switch (action.type) {
+    case LIST_CATEGORIES:
+      return action.categories
+    default:
+      return state
+  }
+}
 
 function posts (state = [], action) {
 
@@ -52,7 +62,7 @@ function posts (state = [], action) {
   }
 }
 
-function comments (state = {}, action) {
+function comments (state = [], action) {
   switch (action.type) {
     // case ADD_POST :
 
@@ -69,5 +79,5 @@ function comments (state = {}, action) {
 }
 
 export default combineReducers({
-  posts, comments,
+  postCategories, posts, comments,
 })

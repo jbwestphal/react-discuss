@@ -1,13 +1,11 @@
 import React from 'react'
-import { getCategories } from '../ReadableAPI'
+import { connect } from 'react-redux'
+import { listAllCategories } from '../actions'
 
 class CategoriesDropdown extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      categories: {}
-    }
   }
 
   handleInputChange(field) {
@@ -18,21 +16,12 @@ class CategoriesDropdown extends React.Component {
   }
 
   componentDidMount() {
-    getCategories().then((categories) => {
-      this.setState({ categories })
-    })
+    this.props.listAllCategories()
   }
 
   render() {
 
-    const { categories } = this.state
-    let listCategs = ''
-
-    if( categories.categories !== undefined ) {
-			listCategs = categories.categories.map((category) => (
-				<option value={category.path} key={category.path}>{category.name}</option>
-			))
-		}
+    const categories = this.props.listCategories
 
     return (
       <div className="dropdown-categs">
@@ -41,11 +30,23 @@ class CategoriesDropdown extends React.Component {
           onChange={(field) => this.handleInputChange(field.target.value)}
           defaultValue="Categories">
           <option>Categories</option>
-          {listCategs}
+          {
+            categories.categories && categories.categories.map((category) => (
+              <option value={category.path} key={category.path}>{category.name}</option>
+            ))
+          }
         </select>
       </div>
     )
   }
 }
 
-export default CategoriesDropdown
+const mapStateToProps = state => ({
+  listCategories: state.postCategories
+});
+
+const mapDispatchToProps = dispatch => ({
+  listAllCategories: () => dispatch(listAllCategories())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesDropdown)

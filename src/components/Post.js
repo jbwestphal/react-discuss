@@ -45,11 +45,9 @@ class Post extends React.Component {
             </div>
             <div className="card-action">
               <Link to={`posts/${post.id}`} className="btn orange lighten-1">More</Link> &nbsp;
-              <a className="btn light-blue lighten-1"
-                ><i className="material-icons">turned_in_not</i> Fixed</a> &nbsp;
               <span className="btn-floating green" onClick={() => voteOnPost({postId: post.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
               <span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
-              <span>{post.voteScore}</span>
+              <span>{post.voteScore} vote(s)</span>
             </div>
           </div>
         ))
@@ -67,11 +65,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    // "listAllPosts" is one props, could be any name
-    // listPosts is the action
-    listAllPosts: () => dispatch(listAllPosts()),
-    // vote on post
-    voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
+  // "listAllPosts" is one props, could be any name
+  // listPosts is the action
+  listAllPosts: () => dispatch(listAllPosts()),
+  // vote on post
+  voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)
