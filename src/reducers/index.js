@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
 import {
-    ADD_POST,
     LIST_CATEGORIES,
     LIST_POSTS,
-    VOTE_POST
-    // REMOVE_POST
+    ADD_POST,
+    VOTE_POST,
+    REMOVE_POST
 } from '../actions'
 
 function postCategories (state = [], action) {
@@ -22,6 +22,7 @@ function posts (state = [], action) {
   const { posts } = action
 
   switch (action.type) {
+
     case ADD_POST:
       return [
         ...state,
@@ -32,22 +33,15 @@ function posts (state = [], action) {
       return posts
 
     case VOTE_POST:
-      // const {id_post, vote} = action
-      console.log(state.posts)
-
       return state.map(item =>
           (item.id === action.result.id)
             ? {...item, voteScore: action.result.voteScore}
             : item
       )
 
-    // case DELETED:
-    //     const { comment } = action;
-    //     const { id, parentId } = comment;
-    //     return {
-    //       ...state,
-    //       [parentId]: state[parentId].filter(i => i !== id),
-    //     };
+    case REMOVE_POST:
+      return posts
+
     // case SAVED:
     //   const { comment } = action;
     //   const { parentId } = comment;

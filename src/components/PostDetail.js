@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 // import serializeForm from 'form-serialize'
 import * as postsAPI from '../ReadableAPI'
 import { convertTimeStamp, getRandomId } from '../utils'
-import { listAllPosts, actionDispatchVote } from '../actions'
+import { listAllPosts, actionDispatchVote, actionDeletePost } from '../actions'
 // import If from './If'
 
 class PostDetail extends Component {
@@ -44,7 +44,7 @@ class PostDetail extends Component {
 			return post.id === this.props.postId
 		})
 
-		const { voteOnPost } = this.props
+		const { voteOnPost, deletePost } = this.props
 
 		return (
 			<section className="container post-detail">
@@ -67,7 +67,10 @@ class PostDetail extends Component {
               			<span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
 										<span>{post.voteScore} vote(s)</span> &nbsp;
 										<button type="button" className="waves-effect waves-light btn">Edit</button> &nbsp;
-										<button type="button" className="waves-effect waves-light btn deep-orange darken-4">Delete</button>
+										<button type="button" className="waves-effect waves-light btn deep-orange darken-4" onClick={() => {
+											deletePost(post.id)
+											window.location.href = '/'
+										}}>Delete</button>
 									</div>
 								</section>
 							</div>
@@ -130,8 +133,10 @@ const mapDispatchToProps = dispatch => ({
   // "listAllPosts" is one props, could be any name
   // listPosts is the action
   listAllPosts: () => dispatch(listAllPosts()),
-  // vote on post
+  // vote on this post
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
+	// delete this post
+  deletePost: (postId) => dispatch(actionDeletePost(postId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)

@@ -34,20 +34,22 @@ class Post extends React.Component {
     const { voteOnPost } = this.props
 
     return (
-      <div className="col s12 l6">
+      <div className="row">
         {
           listConditionalPosts && listConditionalPosts.map((post) => (
-          <div className="card grey lighten-4" key={post.id}>
-            <div className="card-content">
-              <span className="card-title">{ post.title } &nbsp; <small><strong>Categoria:</strong> { post.category }</small></span>
-              <p className="grey-text truncate">{ post.body }</p><br/>
-              <p><strong>Author:</strong> { post.author } &nbsp; | &nbsp; <strong>Published:</strong> {convertTimeStamp(post.timestamp)}</p>
-            </div>
-            <div className="card-action">
-              <Link to={`/posts/${post.id}`} className="btn orange lighten-1">More</Link> &nbsp;
-              <span className="btn-floating green" onClick={() => voteOnPost({postId: post.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
-              <span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
-              <span>{post.voteScore} vote(s)</span>
+          <div className="col s12 l6">
+            <div className="card grey lighten-4" key={post.id}>
+              <div className="card-content">
+                <span className="card-title">{ post.title } &nbsp; <small><strong>Categoria:</strong> { post.category }</small></span>
+                <p className="grey-text truncate">{ post.body }</p><br/>
+                <p><strong>Author:</strong> { post.author } &nbsp; | &nbsp; <strong>Published:</strong> {convertTimeStamp(post.timestamp)}</p>
+              </div>
+              <div className="card-action">
+                <Link to={`/posts/${post.id}`} className="btn orange lighten-1">More</Link> &nbsp;
+                <span className="btn-floating green" onClick={() => voteOnPost({postId: post.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
+                <span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
+                <span>{post.voteScore} vote(s)</span>
+              </div>
             </div>
           </div>
         ))

@@ -64,9 +64,15 @@ export const actionAddPost = (post) => dispatch => (
 );
 
 // remove post
-export function removePost ({ id }) {
-	return {
-		type: REMOVE_POST,
-		id,
-	}
-}
+export const recievePostDeleted = (result) => ({
+  type: REMOVE_POST,
+  result
+});
+
+export const actionDeletePost = (postId) => dispatch => (
+  ReadAPI
+		.removePost(postId)
+		.then(result => {
+			dispatch(recievePostDeleted(result))
+		})
+);
