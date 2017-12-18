@@ -66,7 +66,7 @@ class PostDetail extends Component {
 										<span className="btn-floating green" onClick={() => voteOnPost({postId: post.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
               			<span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
 										<span>{post.voteScore} vote(s)</span> &nbsp;
-										<button type="button" className="waves-effect waves-light btn">Edit</button> &nbsp;
+										<Link to={`/posts/${post.id}/edit`} type="button" className="waves-effect waves-light btn">Edit</Link> &nbsp;
 										<button type="button" className="waves-effect waves-light btn deep-orange darken-4" onClick={() => {
 											deletePost(post.id)
 											window.location.href = '/'
@@ -108,7 +108,7 @@ class PostDetail extends Component {
 														<span className="btn-floating green"><i className="material-icons">thumb_up</i></span> &nbsp;
 														<span className="btn-floating red"><i className="material-icons">thumb_down</i></span> &nbsp;
 														<span>{item.voteScore} vote(s)</span> &nbsp;&nbsp;
-														<a href="#!">Edit</a>
+														<Link to={`${post.id}/edit`}>Edit</Link>
 														<a href="#!">Delete</a>
 													</div>
 												</div>

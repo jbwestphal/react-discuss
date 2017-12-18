@@ -37,8 +37,8 @@ class Post extends React.Component {
       <div className="row">
         {
           listConditionalPosts && listConditionalPosts.map((post) => (
-          <div className="col s12 l6">
-            <div className="card grey lighten-4" key={post.id}>
+          <div className="col s12 l6" key={post.id}>
+            <div className="card grey lighten-4">
               <div className="card-content">
                 <span className="card-title">{ post.title } &nbsp; <small><strong>Categoria:</strong> { post.category }</small></span>
                 <p className="grey-text truncate">{ post.body }</p><br/>

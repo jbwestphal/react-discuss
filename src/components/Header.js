@@ -11,7 +11,7 @@ const Header = () => {
 				<a href="#gonnaOpenMenu" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
 				<ul id="nav-mobile" className="right hide-on-med-and-down">
 					<li><NavLink activeClassName='active' exact to='/'>Home</NavLink></li>
-					<li className="header-dropdown"><CategoriesDropdown isLink={true} /></li>
+					<li className="header-dropdown"><CategoriesDropdown isLink={true} firstValue="Categories" /></li>
 					<li><Link className="waves-effect waves-light btn" to='/new-post'>New Post <i className="material-icons right">add</i></Link></li>
 				</ul>
 			</nav>

@@ -12,7 +12,7 @@ class NewPost extends React.Component {
 
     const values = serializeForm(e.target, { hash: true })
 
-    this.props.createContact(values)
+    this.props.createPost(values)
 
     if (this.props.onCreatePost)
       this.props.onCreatePost()
@@ -45,7 +45,7 @@ class NewPost extends React.Component {
               </div>
               <div className="col s6">
                 <label className="active">Categories</label>
-                <CategoriesDropdown isLink={false} />
+                <CategoriesDropdown isLink={false} firstValue="Categories" />
               </div>
               <div className="input-field col s12">
                 <textarea
@@ -66,7 +66,7 @@ class NewPost extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    createContact: (post) => dispatch(actionAddPost(post)),
+  createPost: (post) => dispatch(actionAddPost(post)),
 });
 
 export default connect(null, mapDispatchToProps)(NewPost)

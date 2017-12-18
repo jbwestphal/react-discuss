@@ -4,6 +4,7 @@ import {
     LIST_CATEGORIES,
     LIST_POSTS,
     ADD_POST,
+    EDIT_POST,
     VOTE_POST,
     REMOVE_POST
 } from '../actions'
@@ -23,13 +24,16 @@ function posts (state = [], action) {
 
   switch (action.type) {
 
+    case LIST_POSTS:
+      return posts
+
     case ADD_POST:
       return [
         ...state,
         action.post
       ]
 
-    case LIST_POSTS:
+    case EDIT_POST:
       return posts
 
     case VOTE_POST:

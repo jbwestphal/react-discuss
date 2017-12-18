@@ -3,6 +3,7 @@ import * as ReadAPI from '../ReadableAPI'
 export const LIST_CATEGORIES = 'LIST_CATEGORIES'
 export const LIST_POSTS = 'LIST_POSTS'
 export const ADD_POST = 'ADD_POST'
+export const EDIT_POST = 'EDIT_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const VOTE_POST = 'VOTE_POST'
 
@@ -58,8 +59,21 @@ export const actionAddPost = (post) => dispatch => (
   ReadAPI
 		.createPost(post)
 		.then(result => {
-			console.log(result)
 			dispatch(recievePostAdded(result))
+		})
+);
+
+export const recievePostEdit = (post) => ({
+  type: EDIT_POST,
+  post
+});
+
+export const actionEditPost = ({postId, title, body}) => dispatch => (
+  ReadAPI
+		.editPost(postId, title, body)
+		.then(result => {
+			console.log(result)
+			// dispatch(recievePostEdit(result))
 		})
 );
 

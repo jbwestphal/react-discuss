@@ -22,10 +22,12 @@ class CategoriesDropdown extends React.Component {
     return (
       <div className="dropdown-categs">
         <select
-          name="category" className="browser-default"
+          name="category"
+          className="browser-default"
           onChange={(field) => this.handleInputChange(field.target.value)}
-          defaultValue="Categories">
-          <option>Categories</option>
+          defaultValue={this.props.isSelected}
+        >
+          <option>{this.props.firstValue}</option>
           {
             categories.categories && categories.categories.map((category) => (
               <option value={category.path} key={category.path}>{category.name}</option>

@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import Home from './components/Home'
 import ByCategory from './components/ByCategory'
 import NewPost from './components/NewPost'
+import EditPost from './components/EditPost'
 import PostDetail from './components/PostDetail'
 
 const Page = (props) => (
@@ -27,11 +28,20 @@ const MainApp = (props) => {
         <TransitionGroup>
           <Page key={locationKey}>
             <Switch location={props.location}>
+
               <Route exact path="/" component={Home} />
-              <Route path="/posts/:postId" render={({match}) => (
-                <div>
-                  <PostDetail postId={match.params.postId} />
-                </div>
+
+              <Route exact path="/posts/:postId" render={({match}) => (
+                <PostDetail postId={match.params.postId} />
+              )} />
+
+              <Route path="/posts/:postId/edit" render={({match, history}) => (
+                <EditPost
+                postId={match.params.postId}
+                onEditPost={() => {
+                    history.push('/')
+                  }}
+                />
               )} />
 
               <Route path="/:categoryPath/posts" render={({match}) => (

@@ -41,10 +41,11 @@ export const editPost = (postId, title, body) =>
     method: 'PUT',
     headers : {
       ...headers,
+      'Content-Type': 'application/json'
     },
-    title,
-    body
+    body: JSON.stringify({title, body})
   }).then(res => res.json())
+    .then(data => data)
 
 export const voteOnPost = (postId, vote) =>
   fetch(`${api}/posts/${postId}`, {
