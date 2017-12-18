@@ -39,7 +39,7 @@ const MainApp = (props) => {
                 <EditPost
                 postId={match.params.postId}
                 onEditPost={() => {
-                    history.push('/')
+                    history.push(`/posts/${match.params.postId}`)
                   }}
                 />
               )} />

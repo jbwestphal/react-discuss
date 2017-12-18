@@ -1,22 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
-import { listAllPosts, actionEditPost } from '../actions'
+import { listAllPosts } from '../actions'
+import * as ReadAPI from '../ReadableAPI'
+import If from './If'
 // import CategoriesDropdown from './CategoriesDropdown'
 
 class EditPost extends React.Component {
 
+  state = {
+		showLoader: false
+	}
+
   handleSubmit = (e) => {
     e.preventDefault();
 
+    this.setState({ showLoader: true })
+
     const values = serializeForm(e.target, { hash: true })
 
-    this.props.editPost(this.props.postId, values.title, values.body)
+    // this.props.editPost(this.props.postId, values.title, values.body)
 
-    // console.log(this.props.postId, values.title)
-
-    // if (this.props.onEditPost)
-    //   this.props.onEditPost()
+    ReadAPI
+		.editPost(this.props.postId, values.title, values.body)
+		.then(result => {
+      setTimeout(() => {
+        if (this.props.onEditPost)
+          this.props.onEditPost()
+      }, 900);
+		})
 
   }
 
@@ -34,6 +46,10 @@ class EditPost extends React.Component {
 
     return (
       <section className="page container">
+        <If test={ this.state.showLoader === true }>
+          <div className="loading-wrapper">Loading...</div>
+        </If>
+        <If test={ this.state.showLoader === false }>
         {
         listPostDetail && listPostDetail.map((post) => (
           <div className="row" key={post.id}>
@@ -69,6 +85,7 @@ class EditPost extends React.Component {
             </form>
           </div>
         ))}
+        </If>
       </section>
     )
   }
@@ -80,7 +97,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   listAllPosts: () => dispatch(listAllPosts()),
-  editPost: (postId, title, body) => dispatch(actionEditPost(postId, title, body)),
+  // editPost: (postId, title, body) => dispatch(actionEditPost(postId, title, body)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPost)

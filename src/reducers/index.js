@@ -4,7 +4,6 @@ import {
     LIST_CATEGORIES,
     LIST_POSTS,
     ADD_POST,
-    EDIT_POST,
     VOTE_POST,
     REMOVE_POST
 } from '../actions'
@@ -32,9 +31,6 @@ function posts (state = [], action) {
         ...state,
         action.post
       ]
-
-    case EDIT_POST:
-      return posts
 
     case VOTE_POST:
       return state.map(item =>

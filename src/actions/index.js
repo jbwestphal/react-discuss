@@ -63,20 +63,6 @@ export const actionAddPost = (post) => dispatch => (
 		})
 );
 
-export const recievePostEdit = (post) => ({
-  type: EDIT_POST,
-  post
-});
-
-export const actionEditPost = ({postId, title, body}) => dispatch => (
-  ReadAPI
-		.editPost(postId, title, body)
-		.then(result => {
-			console.log(result)
-			// dispatch(recievePostEdit(result))
-		})
-);
-
 // remove post
 export const recievePostDeleted = (result) => ({
   type: REMOVE_POST,
