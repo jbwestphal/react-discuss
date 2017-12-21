@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
-import { listAllPosts } from '../actions'
 import * as ReadAPI from '../ReadableAPI'
 import If from './If'
-// import CategoriesDropdown from './CategoriesDropdown'
 
 class EditPost extends React.Component {
 
@@ -19,8 +17,6 @@ class EditPost extends React.Component {
 
     const values = serializeForm(e.target, { hash: true })
 
-    // this.props.editPost(this.props.postId, values.title, values.body)
-
     ReadAPI
 		.editPost(this.props.postId, values.title, values.body)
 		.then(result => {
@@ -30,11 +26,6 @@ class EditPost extends React.Component {
       }, 900);
 		})
 
-  }
-
-  componentDidMount() {
-    // dispatching an action to update the store
-    this.props.listAllPosts()
   }
 
   render() {
@@ -68,10 +59,6 @@ class EditPost extends React.Component {
                     id="title" type="text" className="validate" name="author" disabled defaultValue={post.author} />
                   <label className="active">Author</label>
                 </div>
-                {/* <div className="col s6">
-                  <label className="active">Categories</label>
-                  <CategoriesDropdown isLink={false} isSelected={post.category} />
-                </div> */}
                 <div className="input-field col s12">
                   <textarea
                     id="description" className="validate materialize-textarea" name="body" defaultValue={post.body} />
@@ -95,9 +82,4 @@ const mapStateToProps = state => ({
   listPostDetail: state.posts
 })
 
-const mapDispatchToProps = dispatch => ({
-  listAllPosts: () => dispatch(listAllPosts()),
-  // editPost: (postId, title, body) => dispatch(actionEditPost(postId, title, body)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditPost)
+export default connect(mapStateToProps)(EditPost)

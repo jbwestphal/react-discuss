@@ -2,14 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { convertTimeStamp } from '../utils'
-import { listAllPosts, actionDispatchVote } from '../actions'
+import { actionDispatchVote } from '../actions'
 import If from './If'
 
 class Post extends React.Component {
 
   componentDidMount() {
     // dispatching an action to update the store
-    this.props.listAllPosts()
+    // this.props.listAllPosts()
   }
 
   render() {
@@ -42,7 +42,11 @@ class Post extends React.Component {
               <div className="card-content">
                 <span className="card-title">{ post.title } &nbsp; <small><strong>Categoria:</strong> { post.category }</small></span>
                 <p className="grey-text truncate">{ post.body }</p><br/>
-                <p><strong>Author:</strong> { post.author } &nbsp; | &nbsp; <strong>Published:</strong> {convertTimeStamp(post.timestamp)}</p>
+                <p>
+                  <strong>Author:</strong> { post.author } &nbsp; | &nbsp;
+                  <strong>Published:</strong> {convertTimeStamp(post.timestamp)} &nbsp; | &nbsp;
+                  <strong>Comments:</strong> {post.commentCount}
+                </p>
               </div>
               <div className="card-action">
                 <Link to={`/posts/${post.id}`} className="btn orange lighten-1">More</Link> &nbsp;
@@ -69,7 +73,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   // "listAllPosts" is one props, could be any name
   // listPosts is the action
-  listAllPosts: () => dispatch(listAllPosts()),
+  // listAllPosts: () => dispatch(listAllPosts()),
   // vote on post
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
 })

@@ -40,7 +40,7 @@ function posts (state = [], action) {
       )
 
     case REMOVE_POST:
-      return posts
+      return state
 
     // case SAVED:
     //   const { comment } = action;

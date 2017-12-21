@@ -4,21 +4,20 @@ import { Link } from 'react-router-dom'
 // import serializeForm from 'form-serialize'
 import * as postsAPI from '../ReadableAPI'
 import { convertTimeStamp, getRandomId } from '../utils'
-import { listAllPosts, actionDispatchVote, actionDeletePost } from '../actions'
-// import If from './If'
+import { actionDispatchVote, actionDeletePost } from '../actions'
+import If from './If'
 
 class PostDetail extends Component {
 
 	state = {
-		comments: []
+		comments: [],
+		showLoader: false
 	}
 
 	componentDidMount() {
 		postsAPI.getCommentsByPost(this.props.postId).then((comments) => {
 			this.setState({ comments })
 		})
-
-		this.props.listAllPosts()
 	}
 
 	handleCommentSubmit = (e) => {
@@ -33,6 +32,14 @@ class PostDetail extends Component {
 
   }
 
+	handleDeletePost(postId) {
+		this.setState({ showLoader: true })
+		this.props.deletePost(postId)
+		setTimeout(() => {
+			window.location.href = '/'
+		}, 600);
+	}
+
 	render() {
 
     const timestamp = Date.now()
@@ -44,10 +51,16 @@ class PostDetail extends Component {
 			return post.id === this.props.postId
 		})
 
-		const { voteOnPost, deletePost } = this.props
+		const { voteOnPost } = this.props
 
 		return (
 			<section className="container post-detail">
+
+				<If test={ this.state.showLoader === true }>
+          <div className="loading-wrapper">Loading...</div>
+        </If>
+
+				<If test={ this.state.showLoader === false }>
 				<div className="section">
 					<Link to="/" className="waves-effect waves-light blue darken-1 btn"><i className="material-icons">arrow_back</i> Go back</Link>
 				</div>
@@ -56,21 +69,23 @@ class PostDetail extends Component {
 						<div className="row" key={post.id}>
 							<div className="col s12">
 								<section className="card grey lighten-4">
-									<div className="card-content">
+									<article className="card-content">
 										<header className="card-title orange-text">{post.title}</header>
-										<p><span className="grey-text">Published in:</span> {convertTimeStamp(post.timestamp)}</p>
-										<p><span className="grey-text">Author:</span> {post.author} &nbsp; <span className="grey-text">Category:</span> {post.category}</p>
-										<p className="grey-text">{post.body}</p>
-									</div>
+										<p>
+											<span className="grey-text">Published in:</span> {convertTimeStamp(post.timestamp)} &nbsp; | &nbsp;
+											<span className="grey-text">Author:</span> {post.author} &nbsp; | &nbsp;
+											<span className="grey-text">Category:</span> {post.category}
+										</p>
+										<section className="section">
+											<p className="flow-text">{post.body}</p>
+										</section>
+									</article>
 									<div className="card-action">
 										<span className="btn-floating green" onClick={() => voteOnPost({postId: post.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
               			<span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
 										<span>{post.voteScore} vote(s)</span> &nbsp;
 										<Link to={`/posts/${post.id}/edit`} type="button" className="waves-effect waves-light btn">Edit</Link> &nbsp;
-										<button type="button" className="waves-effect waves-light btn deep-orange darken-4" onClick={() => {
-											deletePost(post.id)
-											window.location.href = '/'
-										}}>Delete</button>
+										<button type="button" className="waves-effect waves-light btn deep-orange darken-4" onClick={() => this.handleDeletePost(post.id)}>Delete</button>
 									</div>
 								</section>
 							</div>
@@ -120,6 +135,7 @@ class PostDetail extends Component {
 						</div>
 					))
 				}
+				</If>
 			</section>
 		)
 	}
@@ -130,9 +146,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  // "listAllPosts" is one props, could be any name
-  // listPosts is the action
-  listAllPosts: () => dispatch(listAllPosts()),
   // vote on this post
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
 	// delete this post
