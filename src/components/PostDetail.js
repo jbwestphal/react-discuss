@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 // import serializeForm from 'form-serialize'
@@ -7,7 +7,7 @@ import { convertTimeStamp, getRandomId } from '../utils'
 import { actionDispatchVote, actionDeletePost } from '../actions'
 import If from './If'
 
-class PostDetail extends Component {
+class PostDetail extends React.Component {
 
 	state = {
 		comments: [],

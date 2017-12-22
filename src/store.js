@@ -20,5 +20,4 @@ const store = createStore(
 
 store.dispatch(listAllPosts())
 
-
 export default store

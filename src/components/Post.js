@@ -1,16 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { convertTimeStamp } from '../utils'
 import { actionDispatchVote } from '../actions'
 import If from './If'
 
 class Post extends React.Component {
-
-  componentDidMount() {
-    // dispatching an action to update the store
-    // this.props.listAllPosts()
-  }
 
   render() {
 
@@ -64,6 +60,19 @@ class Post extends React.Component {
       </div>
     )
   }
+}
+
+Post.propTypes = {
+  listPosts: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    commentCount: PropTypes.number.isRequired,
+    deleted: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    voteScore: PropTypes.number.isRequired
+  })).isRequired
 }
 
 const mapStateToProps = state => ({
