@@ -1,11 +1,22 @@
 
 import * as ReadAPI from '../ReadableAPI'
+
+// categories actions
 export const LIST_CATEGORIES = 'LIST_CATEGORIES'
+
+// posts actions
 export const LIST_POSTS = 'LIST_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const VOTE_POST = 'VOTE_POST'
+
+// comments actions
+export const LIST_COMMENTS = 'LIST_COMMENTS'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+
+/* ACTIONS CREATORS */
 
 // list categories
 export const recieveCategs = (categories) => ({
@@ -74,5 +85,48 @@ export const actionDeletePost = (postId) => dispatch => (
 		.removePost(postId)
 		.then(result => {
 			dispatch(recievePostDeleted(result))
+		})
+);
+
+// list comments
+export const recieveComments = (comments) => ({
+  type: LIST_COMMENTS,
+  comments
+});
+
+export const actionListComments = (postId) => dispatch => (
+  ReadAPI
+		.getCommentsByPost(postId)
+		.then(result => {
+			dispatch(recieveComments(result))
+		})
+);
+
+// add comments
+export const recieveCommentAdded = (comment) => ({
+  type: ADD_COMMENT,
+  comment
+});
+
+export const actionAddComment = (comment) => dispatch => (
+  ReadAPI
+		.createComment(comment)
+		.then(result => {
+			dispatch(recieveCommentAdded(result))
+		})
+);
+
+// remove comment
+export const recieveCommentDeleted = (result) => ({
+  type: REMOVE_COMMENT,
+  result
+});
+
+export const actionDeleteComment = (commentId) => dispatch => (
+  ReadAPI
+		.removeComment(commentId)
+		.then(result => {
+			console.log(result)
+			dispatch(recieveCommentDeleted(result))
 		})
 );

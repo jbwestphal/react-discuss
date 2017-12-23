@@ -5,7 +5,10 @@ import {
     LIST_POSTS,
     ADD_POST,
     VOTE_POST,
-    REMOVE_POST
+    REMOVE_POST,
+    LIST_COMMENTS,
+    ADD_COMMENT,
+    REMOVE_COMMENT
 } from '../actions'
 
 function postCategories (state = [], action) {
@@ -42,30 +45,34 @@ function posts (state = [], action) {
     case REMOVE_POST:
       return state
 
-    // case SAVED:
-    //   const { comment } = action;
-    //   const { parentId } = comment;
-
-    //   return {
-    //     ...state,
-    //     [parentId]: [...state[parentId] || [], comment.id],
-    //   };
-
     default:
       return state
   }
 }
 
 function comments (state = [], action) {
+
+  const { comments, comment, result } = action
   switch (action.type) {
-    // case ADD_POST :
+    case LIST_COMMENTS:
+      return comments
 
-    //   // const {recipe} = action
+    case ADD_COMMENT:
+      return [
+        ...state,
+        comment
+      ]
 
-    //   return {
-    //     ...state,
-    //     id
-    //   }
+    case REMOVE_COMMENT:
+      return state.filter(item => (item.id !== result.id)
+      )
+
+    // case REMOVE_COMMENT:
+    //   return state.map(item =>
+    //       (item.id === result.id)
+    //         ? {...item, deleted: true}
+    //         : item
+    //   )
 
     default:
       return state

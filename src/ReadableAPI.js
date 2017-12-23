@@ -100,8 +100,8 @@ export const voteOnComment = (commentId, vote) =>
     option: vote,
   }).then(res => res.json())
 
-export const removeComment = (postId) =>
-  fetch(`${api}/comments/${postId}`, { method: 'DELETE', headers })
+export const removeComment = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, { method: 'DELETE', headers })
     .then(res => res.json())
     .then(data => data)
 
