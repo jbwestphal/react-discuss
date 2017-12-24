@@ -36,14 +36,14 @@ export const createPost = (post) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const editPost = (postId, title, body) =>
+export const editPost = (postId, body) =>
   fetch(`${api}/posts/${postId}`, {
     method: 'PUT',
     headers : {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({title, body})
+    body: JSON.stringify(body)
   }).then(res => res.json())
     .then(data => data)
 
@@ -73,15 +73,14 @@ export const createComment = (body) =>
     body: JSON.stringify(body)
   }).then(res => res.json())
 
-export const editComment = (commentId, timestamp, body) =>
+export const editComment = (commentId, body) =>
   fetch(`${api}/comments/${commentId}`, {
     method: 'PUT',
     headers : {
       ...headers,
       'Content-Type': 'application/json'
     },
-    timestamp,
-    body
+    body: JSON.stringify(body)
   }).then(res => res.json())
 
 export const getCommentSingle = (id) =>

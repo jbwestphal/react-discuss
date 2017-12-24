@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
-import * as ReadAPI from '../ReadableAPI'
 import If from './If'
+import { actionEditPost } from '../actions'
 
 class EditPost extends React.Component {
 
@@ -17,14 +17,12 @@ class EditPost extends React.Component {
 
     const values = serializeForm(e.target, { hash: true })
 
-    ReadAPI
-		.editPost(this.props.postId, values.title, values.body)
-		.then(result => {
-      setTimeout(() => {
-        if (this.props.onEditPost)
-          this.props.onEditPost()
-      }, 900);
-		})
+    this.props.editPost(values.id, values)
+
+    setTimeout(() => {
+      if (this.props.onEditPost)
+        this.props.onEditPost()
+    }, 500);
 
   }
 
@@ -48,6 +46,7 @@ class EditPost extends React.Component {
               <h4 className="page-title col s12">Edit Post</h4>
             </div>
             <form className="col s12" onSubmit={this.handleSubmit}>
+              <input id="id" type="hidden" name="id" defaultValue={post.id} />
               <div className="row">
                 <div className="input-field col s6">
                   <input
@@ -82,4 +81,8 @@ const mapStateToProps = state => ({
   listPostDetail: state.posts
 })
 
-export default connect(mapStateToProps)(EditPost)
+const mapDispatchToProps = dispatch => ({
+  editPost: (postId, post) => dispatch(actionEditPost(postId, post)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost)

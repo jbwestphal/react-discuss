@@ -4,6 +4,7 @@ import {
     LIST_CATEGORIES,
     LIST_POSTS,
     ADD_POST,
+    EDIT_POST,
     VOTE_POST,
     REMOVE_POST,
     LIST_COMMENTS,
@@ -11,7 +12,8 @@ import {
     REMOVE_COMMENT,
     VOTE_COMMENT,
     MINUS_COMMENT_COUNT,
-    ADD_COMMENT_COUNT
+    ADD_COMMENT_COUNT,
+    EDIT_COMMENT
 } from '../actions'
 
 function postCategories (state = [], action) {
@@ -30,13 +32,24 @@ function posts (state = [], action) {
   switch (action.type) {
 
     case LIST_POSTS:
-      return posts
+      return (
+        posts.sort(function(a, b){
+          return a.voteScore - b.voteScore
+        })
+      )
 
     case ADD_POST:
       return [
         ...state,
         action.post
       ]
+
+    case EDIT_POST:
+      return state.map(item =>
+          (item.id === action.result.id)
+            ? {...item, body: action.result.body, title: action.result.title, timestamp: action.result.timestamp}
+            : item
+      )
 
     case VOTE_POST:
       return state.map(item =>
@@ -73,13 +86,24 @@ function comments (state = [], action) {
   switch (action.type) {
 
     case LIST_COMMENTS:
-      return comments
+      return (
+        comments.sort(function(a, b){
+          return a.timestamp + b.timestamp
+        })
+      )
 
     case ADD_COMMENT:
       return [
         ...state,
         comment
       ]
+
+    case EDIT_COMMENT:
+      return state.map(item =>
+          (item.id === action.result.id)
+            ? {...item, body: action.result.body, timestamp: action.result.timestamp}
+            : item
+      )
 
     case REMOVE_COMMENT:
       return state.filter(item => (item.id !== result.id))

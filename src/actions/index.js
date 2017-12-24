@@ -14,6 +14,7 @@ export const VOTE_POST = 'VOTE_POST'
 // comments actions
 export const LIST_COMMENTS = 'LIST_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const ADD_COMMENT_COUNT = 'ADD_COMMENT_COUNT'
@@ -77,6 +78,20 @@ export const actionAddPost = (post) => dispatch => (
 		})
 );
 
+// edit post
+export const recievePostEdited = (result) => ({
+  type: EDIT_POST,
+  result
+});
+
+export const actionEditPost = (postId, post) => dispatch => (
+  ReadAPI
+		.editPost(postId, post)
+		.then(result => {
+			dispatch(recievePostEdited(result))
+		})
+);
+
 // remove post
 export const recievePostDeleted = (result) => ({
   type: REMOVE_POST,
@@ -120,9 +135,22 @@ export const actionAddComment = (comment) => dispatch => (
   ReadAPI
 		.createComment(comment)
 		.then(result => {
-			console.log(result)
 			dispatch(recieveCommentAdded(result))
 			dispatch(recieveCommentCountPostAdd(result))
+		})
+);
+
+// edit comments
+export const recieveCommentEdited = (result) => ({
+  type: EDIT_COMMENT,
+  result
+});
+
+export const actionEditComment = (commentId, comment) => dispatch => (
+  ReadAPI
+		.editComment(commentId, comment)
+		.then(result => {
+			dispatch(recieveCommentEdited(result))
 		})
 );
 

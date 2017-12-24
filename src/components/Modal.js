@@ -7,15 +7,16 @@ const Modal = (props) => {
     display: props.isOpen ? 'block' : 'none'
   }
 
-  const closeModal = () => {
-    document.querySelector('.modal-custom').style.display = 'none'
+  const closeModal = (el) => {
+    let target = el.target
+		target.parentNode.parentNode.style.display = 'none';
   }
 
 	return (
 		<div className="modal-custom" style={display}>
       <div className="modal-backdrop"></div>
       <div className="modal-content">
-        <div className="modal-close" onClick={() => closeModal()}>X</div>
+        <div className="modal-close" onClick={(el) => closeModal(el)}>X</div>
         { props.children }
       </div>
     </div>

@@ -2,12 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
+import PropTypes from 'prop-types'
 import { convertTimeStamp, getRandomId } from '../utils'
 import If from './If'
 import Modal from './Modal'
 import {
 	actionDispatchVote, actionDeletePost,
-	actionListComments, actionAddComment, actionDeleteComment, actionDispatchVoteComment } from '../actions'
+	actionListComments, actionAddComment, actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../actions'
 
 class PostDetail extends React.Component {
 
@@ -16,14 +17,13 @@ class PostDetail extends React.Component {
     this.state = {
 		loadingPost: false,
 		loadingComment: false,
-		commentsModalOpen: false,
 	}
 
-    this.openCommentsModal = this.openCommentsModal.bind(this);
-    this.closeCommentsModal = this.closeCommentsModal.bind(this);
+    this.openCommentsModal = this.openCommentsModal.bind(this)
   }
 
 	componentDidMount() {
+		// dispatch action to load post comments
 		this.props.commentsPost(this.props.postId)
 	}
 
@@ -33,7 +33,7 @@ class PostDetail extends React.Component {
 
 		setTimeout(() => {
 			window.location.href = '/'
-		}, 600);
+		}, 300);
 	}
 
 	handleCommentSubmit = (e) => {
@@ -45,6 +45,20 @@ class PostDetail extends React.Component {
 
 		setTimeout(() => {
 			this.setState({ loadingComment: false })
+		}, 300);
+  }
+
+	handleCommentEdit = (e) => {
+    e.preventDefault();
+    const values = serializeForm(e.target, { hash: true })
+    this.props.editCommentPost(values.id, values)
+
+		let modal = document.querySelectorAll('.modal-custom')
+
+		setTimeout(() => {
+			for (let i = 0; i < modal.length; i++) {
+				modal[i].style.display = 'none';
+			}
 		}, 400);
   }
 
@@ -57,25 +71,22 @@ class PostDetail extends React.Component {
 		}, 400);
 	}
 
-	openCommentsModal = () => this.setState(() => ({ commentsModalOpen: true }))
-  closeCommentsModal = () => this.setState(() => ({ commentsModalOpen: false }))
+	openCommentsModal = (el) => {
+		let target = el.target
+		target.parentNode.querySelector('.modal-custom').style.display = 'block';
+	}
 
 	render() {
 
     const timestamp = Date.now()
 		const { voteOnPost, listComments, postId, voteOnComment } = this.props
-		const { loadingPost, loadingComment, commentsModalOpen } = this.state
+		const { loadingPost, loadingComment } = this.state
 
 		let listPostDetail = this.props.listPostDetail
 
 		listPostDetail = listPostDetail && listPostDetail.filter((post) => {
 			return post.id === postId
 		})
-
-		// order comments by date
-		// this.props.listComments.sort(function(a, b){
-		// 	return a.timestamp + b.timestamp
-		// })
 
 		return (
 			<section className="container post-detail">
@@ -154,17 +165,17 @@ class PostDetail extends React.Component {
 																<span className="btn-floating green" onClick={() => voteOnComment({commentId: item.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
 																<span className="btn-floating red" onClick={() => voteOnComment({commentId: item.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
 																<span>{item.voteScore} vote(s)</span> &nbsp;&nbsp;
-																<button className="waves-effect waves-light btn" onClick={this.openCommentsModal}>Edit</button> &nbsp;
+																<button className="waves-effect waves-light btn" onClick={(el) => this.openCommentsModal(el)}>Edit</button> &nbsp;
 																<button className="waves-effect waves-light btn  deep-orange darken-4" onClick={() => this.handleDeleteComment(item.id)}>Delete</button>
-															</div>
-															<Modal
-																isOpen={commentsModalOpen}
-															>
-																<h4>Edit Comment</h4>
-																<If test={commentsModalOpen}>
-																	<form className="col s12">
+																<Modal>
+																	<h4>Edit Comment</h4>
+																	<form className="col s12" onSubmit={this.handleCommentEdit}>
 																		<input type="hidden" name="timestamp" defaultValue={timestamp} />
+																		<input type="hidden" name="id" defaultValue={item.id} />
 																		<div className="row">
+																			<div className="col s12">
+																				<p className="section">Author: <strong>{item.author}</strong></p>
+																			</div>
 																			<div className="input-field col s12">
 																				<textarea
 																					id="textComment"
@@ -174,16 +185,12 @@ class PostDetail extends React.Component {
 																				<label className="active">Text</label>
 																			</div>
 																			<div className="input-field col s12 right-align">
-																				<button
-																					type="button"
-																					className="waves-effect waves-light btn grey lighten-1"
-																					onClick={this.closeCommentsModal}>Cancel</button> &nbsp;
 																				<button type="submit" className="waves-effect waves-light btn">Publish</button>
 																			</div>
 																		</div>
 																	</form>
-																</If>
-															</Modal>
+																</Modal>
+															</div>
 														</div>
 													))
 												}
@@ -201,6 +208,19 @@ class PostDetail extends React.Component {
 	}
 }
 
+PostDetail.propTypes = {
+  listPostDetail: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    commentCount: PropTypes.number.isRequired,
+    deleted: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    voteScore: PropTypes.number.isRequired
+  })).isRequired
+}
+
 const mapStateToProps = state => ({
   listPostDetail: state.posts,
   listComments: state.comments
@@ -213,6 +233,7 @@ const mapDispatchToProps = dispatch => ({
 	// actions for comments
   commentsPost: (postId) => dispatch(actionListComments(postId)),
   addCommentPost: (comment) => dispatch(actionAddComment(comment)),
+  editCommentPost: (commentId, comment) => dispatch(actionEditComment(commentId, comment)),
   deleteComment: (commentId) => dispatch(actionDeleteComment(commentId)),
 	voteOnComment: (commentId, vote) => dispatch(actionDispatchVoteComment(commentId, vote))
 })

@@ -84,10 +84,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  // "listAllPosts" is one props, could be any name
-  // listPosts is the action
-  // listAllPosts: () => dispatch(listAllPosts()),
-  // vote on post
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
 })
 
