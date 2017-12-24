@@ -6,8 +6,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './components/Home'
 import ByCategory from './components/ByCategory'
-import NewPost from './components/NewPost'
-import EditPost from './components/EditPost'
+import PostNew from './components/PostNew'
+import PostEdit from './components/PostEdit'
 import PostDetail from './components/PostDetail'
 
 const Page = (props) => (
@@ -36,7 +36,7 @@ const MainApp = (props) => {
               )} />
 
               <Route path="/posts/:postId/edit" render={({match, history}) => (
-                <EditPost
+                <PostEdit
                 postId={match.params.postId}
                 onEditPost={() => {
                     history.push(`/posts/${match.params.postId}`)
@@ -49,7 +49,7 @@ const MainApp = (props) => {
               )} />
 
               <Route path="/new-post" render={({ history }) => (
-                <NewPost
+                <PostNew
                   onCreatePost={() => {
                     history.push('/')
                   }}

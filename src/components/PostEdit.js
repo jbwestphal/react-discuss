@@ -5,10 +5,15 @@ import If from './If'
 import { actionEditPost } from '../actions'
 
 class EditPost extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      showLoader: false
+    }
 
-  state = {
-		showLoader: false
-	}
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.goBack = this.goBack.bind(this)
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +29,11 @@ class EditPost extends React.Component {
         this.props.onEditPost()
     }, 500);
 
+  }
+
+  goBack() {
+    if (this.props.onEditPost)
+      this.props.onEditPost()
   }
 
   render() {
@@ -64,7 +74,7 @@ class EditPost extends React.Component {
                   <label className="active">Text</label>
                 </div>
                 <div className="input-field col s12 right-align">
-                  <button type="button" className="waves-effect waves-light btn grey lighten-1">Clear</button> &nbsp;
+                  <button type="button" className="waves-effect waves-light btn grey lighten-1" onClick={this.goBack}>Cancel</button> &nbsp;
                   <button type="submit" className="waves-effect waves-light btn">Publish</button>
                 </div>
               </div>

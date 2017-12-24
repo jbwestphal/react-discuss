@@ -1,4 +1,3 @@
-
 import * as ReadAPI from '../ReadableAPI'
 
 // categories actions
