@@ -4,16 +4,24 @@ import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import { convertTimeStamp, getRandomId } from '../utils'
 import If from './If'
+import Modal from './Modal'
 import {
 	actionDispatchVote, actionDeletePost,
-	actionListComments, actionAddComment, actionDeleteComment } from '../actions'
+	actionListComments, actionAddComment, actionDeleteComment, actionDispatchVoteComment } from '../actions'
 
 class PostDetail extends React.Component {
 
-	state = {
+	constructor () {
+    super();
+    this.state = {
 		loadingPost: false,
-		loadingComment: false
+		loadingComment: false,
+		commentsModalOpen: false,
 	}
+
+    this.openCommentsModal = this.openCommentsModal.bind(this);
+    this.closeCommentsModal = this.closeCommentsModal.bind(this);
+  }
 
 	componentDidMount() {
 		this.props.commentsPost(this.props.postId)
@@ -44,17 +52,19 @@ class PostDetail extends React.Component {
 		this.setState({ loadingComment: true })
 		this.props.deleteComment(commentId)
 
-		console.log(commentId)
-
 		setTimeout(() => {
 			this.setState({ loadingComment: false })
 		}, 400);
 	}
 
+	openCommentsModal = () => this.setState(() => ({ commentsModalOpen: true }))
+  closeCommentsModal = () => this.setState(() => ({ commentsModalOpen: false }))
+
 	render() {
 
     const timestamp = Date.now()
-		const { voteOnPost, listComments, postId } = this.props
+		const { voteOnPost, listComments, postId, voteOnComment } = this.props
+		const { loadingPost, loadingComment, commentsModalOpen } = this.state
 
 		let listPostDetail = this.props.listPostDetail
 
@@ -70,11 +80,11 @@ class PostDetail extends React.Component {
 		return (
 			<section className="container post-detail">
 
-				<If test={ this.state.loadingPost === true }>
+				<If test={ loadingPost === true }>
           <div className="loading-wrapper">Loading...</div>
         </If>
 
-				<If test={ this.state.loadingPost === false }>
+				<If test={ loadingPost === false }>
 					<div className="section">
 						<Link to="/" className="waves-effect waves-light blue darken-1 btn"><i className="material-icons">arrow_back</i> Go back</Link>
 					</div>
@@ -125,10 +135,10 @@ class PostDetail extends React.Component {
 												</div>
 											</div>
 										</form>
-										<If test={ this.state.loadingComment === true }>
+										<If test={ loadingComment === true }>
 											<div className="loading-wrapper">Loading...</div>
 										</If>
-										<If test={ this.state.loadingComment === false }>
+										<If test={ loadingComment === false }>
 											<div className="col s12 m6">
 												{
 													listComments && listComments.filter((item) => {
@@ -141,17 +151,45 @@ class PostDetail extends React.Component {
 																<p>{item.body}</p>
 															</div>
 															<div className="card-action">
-																<span className="btn-floating green"><i className="material-icons">thumb_up</i></span> &nbsp;
-																<span className="btn-floating red"><i className="material-icons">thumb_down</i></span> &nbsp;
+																<span className="btn-floating green" onClick={() => voteOnComment({commentId: item.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
+																<span className="btn-floating red" onClick={() => voteOnComment({commentId: item.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
 																<span>{item.voteScore} vote(s)</span> &nbsp;&nbsp;
-																<Link to={`/comments/${item.id}/edit`}>Edit</Link>
-																<a href="#!" onClick={() => this.handleDeleteComment(item.id)}>Delete</a>
+																<button className="waves-effect waves-light btn" onClick={this.openCommentsModal}>Edit</button> &nbsp;
+																<button className="waves-effect waves-light btn  deep-orange darken-4" onClick={() => this.handleDeleteComment(item.id)}>Delete</button>
 															</div>
+															<Modal
+																isOpen={commentsModalOpen}
+															>
+																<h4>Edit Comment</h4>
+																<If test={commentsModalOpen}>
+																	<form className="col s12">
+																		<input type="hidden" name="timestamp" defaultValue={timestamp} />
+																		<div className="row">
+																			<div className="input-field col s12">
+																				<textarea
+																					id="textComment"
+																					className="validate materialize-textarea"
+																					name="body"
+																					defaultValue={item.body} />
+																				<label className="active">Text</label>
+																			</div>
+																			<div className="input-field col s12 right-align">
+																				<button
+																					type="button"
+																					className="waves-effect waves-light btn grey lighten-1"
+																					onClick={this.closeCommentsModal}>Cancel</button> &nbsp;
+																				<button type="submit" className="waves-effect waves-light btn">Publish</button>
+																			</div>
+																		</div>
+																	</form>
+																</If>
+															</Modal>
 														</div>
 													))
 												}
 											</div>
 										</If>
+
 									</div>
 								</div>
 							</div>
@@ -176,6 +214,7 @@ const mapDispatchToProps = dispatch => ({
   commentsPost: (postId) => dispatch(actionListComments(postId)),
   addCommentPost: (comment) => dispatch(actionAddComment(comment)),
   deleteComment: (commentId) => dispatch(actionDeleteComment(commentId)),
+	voteOnComment: (commentId, vote) => dispatch(actionDispatchVoteComment(commentId, vote))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)

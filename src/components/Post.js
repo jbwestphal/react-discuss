@@ -31,8 +31,12 @@ class Post extends React.Component {
 
     return (
       <div className="row">
-        {
-          listConditionalPosts && listConditionalPosts.map((post) => (
+        <div className="col s12">
+          <button className="btn">Order By Date</button> &nbsp;
+          <button className="btn">Order By VoteScore</button> &nbsp;
+        </div>
+
+        {listConditionalPosts && listConditionalPosts.map((post) => (
           <div className="col s12 l6" key={post.id}>
             <div className="card grey lighten-4">
               <div className="card-content">

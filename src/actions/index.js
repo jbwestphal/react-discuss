@@ -15,6 +15,9 @@ export const VOTE_POST = 'VOTE_POST'
 export const LIST_COMMENTS = 'LIST_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const ADD_COMMENT_COUNT = 'ADD_COMMENT_COUNT'
+export const MINUS_COMMENT_COUNT = 'MINUS_COMMENT_COUNT'
 
 /* ACTIONS CREATORS */
 
@@ -108,11 +111,18 @@ export const recieveCommentAdded = (comment) => ({
   comment
 });
 
+export const recieveCommentCountPostAdd = (result) => ({
+  type: ADD_COMMENT_COUNT,
+  result
+});
+
 export const actionAddComment = (comment) => dispatch => (
   ReadAPI
 		.createComment(comment)
 		.then(result => {
+			console.log(result)
 			dispatch(recieveCommentAdded(result))
+			dispatch(recieveCommentCountPostAdd(result))
 		})
 );
 
@@ -122,11 +132,30 @@ export const recieveCommentDeleted = (result) => ({
   result
 });
 
+export const recieveCommentCountPostMinus = (result) => ({
+  type: MINUS_COMMENT_COUNT,
+  result
+});
+
 export const actionDeleteComment = (commentId) => dispatch => (
   ReadAPI
 		.removeComment(commentId)
 		.then(result => {
-			console.log(result)
 			dispatch(recieveCommentDeleted(result))
+			dispatch(recieveCommentCountPostMinus(result))
+		})
+);
+
+// recieve votes for comments
+export const recieveVoteComment = (result) => ({
+  type: VOTE_COMMENT,
+  result
+});
+
+export const actionDispatchVoteComment = ({commentId, vote}) => dispatch => (
+  ReadAPI
+		.voteOnComment(commentId, vote)
+		.then(result => {
+			dispatch(recieveVoteComment(result))
 		})
 );

@@ -55,8 +55,7 @@ export const voteOnPost = (postId, vote) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ option: vote })
-  })
-    .then(res => res.json())
+  }).then(res => res.json())
     .then(data => data)
 
 export const getCommentsByPost = (postId) =>
@@ -91,14 +90,15 @@ export const getCommentSingle = (id) =>
     .then(data => data)
 
 export const voteOnComment = (commentId, vote) =>
-  fetch(`${api}/posts/${commentId}`, {
+  fetch(`${api}/comments/${commentId}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    option: vote,
+    body: JSON.stringify({ option: vote })
   }).then(res => res.json())
+    .then(data => data)
 
 export const removeComment = (commentId) =>
   fetch(`${api}/comments/${commentId}`, { method: 'DELETE', headers })

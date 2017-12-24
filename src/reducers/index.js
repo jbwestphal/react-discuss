@@ -8,7 +8,10 @@ import {
     REMOVE_POST,
     LIST_COMMENTS,
     ADD_COMMENT,
-    REMOVE_COMMENT
+    REMOVE_COMMENT,
+    VOTE_COMMENT,
+    MINUS_COMMENT_COUNT,
+    ADD_COMMENT_COUNT
 } from '../actions'
 
 function postCategories (state = [], action) {
@@ -45,6 +48,20 @@ function posts (state = [], action) {
     case REMOVE_POST:
       return state
 
+    case ADD_COMMENT_COUNT:
+      return state.map(item =>
+          (item.id === action.result.parentId)
+            ? {...item, commentCount: item.commentCount + 1}
+            : item
+      )
+
+    case MINUS_COMMENT_COUNT:
+      return state.map(item =>
+          (item.id === action.result.parentId)
+            ? {...item, commentCount: item.commentCount - 1}
+            : item
+      )
+
     default:
       return state
   }
@@ -54,6 +71,7 @@ function comments (state = [], action) {
 
   const { comments, comment, result } = action
   switch (action.type) {
+
     case LIST_COMMENTS:
       return comments
 
@@ -64,15 +82,14 @@ function comments (state = [], action) {
       ]
 
     case REMOVE_COMMENT:
-      return state.filter(item => (item.id !== result.id)
-      )
+      return state.filter(item => (item.id !== result.id))
 
-    // case REMOVE_COMMENT:
-    //   return state.map(item =>
-    //       (item.id === result.id)
-    //         ? {...item, deleted: true}
-    //         : item
-    //   )
+    case VOTE_COMMENT:
+      return state.map(item =>
+          (item.id === action.result.id)
+            ? {...item, voteScore: action.result.voteScore}
+            : item
+      )
 
     default:
       return state
