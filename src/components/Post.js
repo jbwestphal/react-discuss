@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { convertTimeStamp } from '../utils'
-import { actionDispatchVote } from '../actions'
+import { actionDispatchVote, actionSortPosts } from '../actions'
 import If from './If'
 
 class Post extends React.Component {
@@ -27,13 +27,13 @@ class Post extends React.Component {
       listConditionalPosts = listAllPosts
     }
 
-    const { voteOnPost } = this.props
+    const { voteOnPost, sortPost } = this.props
 
     return (
       <div className="row">
         <div className="col s12">
-          <button className="btn">Order By Date</button> &nbsp;
-          <button className="btn">Order By VoteScore</button> &nbsp;
+          <button className="btn" onClick={() => sortPost('byDate')}>Order By Date</button> &nbsp;
+          <button className="btn" onClick={() => sortPost('byVoteScore')}>Order By VoteScore</button> &nbsp;
         </div>
 
         {listConditionalPosts && listConditionalPosts.map((post) => (
@@ -85,6 +85,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
+  sortPost: (sortKey) => dispatch(actionSortPosts(sortKey)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

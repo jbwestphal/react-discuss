@@ -13,7 +13,8 @@ import {
     VOTE_COMMENT,
     MINUS_COMMENT_COUNT,
     ADD_COMMENT_COUNT,
-    EDIT_COMMENT
+    EDIT_COMMENT,
+    SORT_POSTS
 } from '../actions'
 
 function postCategories (state = [], action) {
@@ -75,6 +76,20 @@ function posts (state = [], action) {
             : item
       )
 
+    case SORT_POSTS:
+      return (action.sortKey === 'byDate') ?
+        [...state].sort((a, b) => {
+          if(a.timestamp > b.timestamp) return -1
+          else if (a.timestamp < b.timestamp) return 1
+          else return 0
+        }) :
+        [...state].sort((a, b) => {
+          if(a.voteScore > b.voteScore) return -1
+          else if (a.voteScore < b.voteScore) return 1
+          else return 0
+        })
+
+
     default:
       return state
   }
@@ -86,11 +101,7 @@ function comments (state = [], action) {
   switch (action.type) {
 
     case LIST_COMMENTS:
-      return (
-        comments.sort(function(a, b){
-          return a.timestamp + b.timestamp
-        })
-      )
+      return comments
 
     case ADD_COMMENT:
       return [

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { convertTimeStamp, getRandomId } from '../utils'
 import If from './If'
 import CommentCard from './CommentCard'
-import { actionDispatchVote, actionDeletePost, actionListComments, actionAddComment } from '../actions'
+import { actionDispatchVote, actionDeletePost, actionAddComment } from '../actions'
 
 class PostDetail extends React.Component {
 
@@ -17,11 +17,6 @@ class PostDetail extends React.Component {
 			loadingComment: false,
 		}
   }
-
-	componentDidMount() {
-		// dispatch action to load post comments
-		this.props.commentsPost(this.props.postId)
-	}
 
 	handleDeletePost(postId) {
 		this.setState({ loadingPost: true })
@@ -145,8 +140,7 @@ PostDetail.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  listPostDetail: state.posts,
-  listComments: state.comments
+  listPostDetail: state.posts
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -154,7 +148,6 @@ const mapDispatchToProps = dispatch => ({
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
   deletePost: (postId) => dispatch(actionDeletePost(postId)),
 	// actions for comments
-  commentsPost: (postId) => dispatch(actionListComments(postId)),
   addCommentPost: (comment) => dispatch(actionAddComment(comment))
 })
 

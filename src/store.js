@@ -2,7 +2,7 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware, compose } from 'redux'
 import reducer from './reducers'
-import { listAllPosts } from './actions'
+import { listAllPosts, actionSortPosts } from './actions'
 
 const middleware = [ thunk ];
 if (process.env.NODE_ENV !== 'production') {
@@ -18,6 +18,7 @@ const store = createStore(
   )
 )
 
-store.dispatch(listAllPosts())
+store.dispatch(listAllPosts()).then(() => store.dispatch(actionSortPosts('byVoteScore')))
+
 
 export default store

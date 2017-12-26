@@ -2,10 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import serializeForm from 'form-serialize'
+import { createSelector } from 'reselect'
 import Modal from './Modal'
 import { convertTimeStamp } from '../utils'
 import If from './If'
-import { actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../actions'
+import { actionListComments, actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../actions'
 
 class CommentCard extends React.Component {
 
@@ -18,6 +19,11 @@ class CommentCard extends React.Component {
 
     this.openCommentsModal = this.openCommentsModal.bind(this)
   }
+
+	componentDidMount() {
+		// dispatch action to load post comments
+		this.props.commentsPost(this.props.parentId)
+	}
 
   handleCommentEdit = (e) => {
     e.preventDefault();
@@ -128,10 +134,25 @@ CommentCard.propTypes = {
   })).isRequired
 }
 
+// sort comments by most recent using Reselect library
+const getCommentsList = (state) => state;
+
+const selectorCommentsList = createSelector(
+  getCommentsList,
+  (list) => {
+  return list.sort((a, b) => a.timestamp + b.timestamp)
+  }
+)
+
+const mapStateToProps = state => ({
+  listComments: selectorCommentsList(state.comments)
+})
+
 const mapDispatchToProps = dispatch => ({
+  commentsPost: (postId) => dispatch(actionListComments(postId)),
   editCommentPost: (commentId, comment) => dispatch(actionEditComment(commentId, comment)),
   deleteComment: (commentId) => dispatch(actionDeleteComment(commentId)),
 	voteOnComment: (commentId, vote) => dispatch(actionDispatchVoteComment(commentId, vote))
 })
 
-export default connect(null, mapDispatchToProps)(CommentCard)
+export default connect(mapStateToProps, mapDispatchToProps)(CommentCard)
