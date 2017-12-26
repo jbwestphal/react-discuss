@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
 import { getRandomId } from '../utils'
-import { actionAddPost } from '../actions'
+import { actionAddPost } from '../_actions'
 import CategoriesDropdown from './CategoriesDropdown'
 
 class NewPost extends React.Component {

@@ -15,7 +15,7 @@ import {
     ADD_COMMENT_COUNT,
     EDIT_COMMENT,
     SORT_POSTS
-} from '../actions'
+} from '../_actions'
 
 function postCategories (state = [], action) {
   switch (action.type) {

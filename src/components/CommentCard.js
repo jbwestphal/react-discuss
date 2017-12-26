@@ -6,7 +6,7 @@ import { createSelector } from 'reselect'
 import Modal from './Modal'
 import { convertTimeStamp } from '../utils'
 import If from './If'
-import { actionListComments, actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../actions'
+import { actionListComments, actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../_actions'
 
 class CommentCard extends React.Component {
 

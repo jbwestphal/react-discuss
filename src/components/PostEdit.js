@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
 import If from './If'
-import { actionEditPost } from '../actions'
+import { actionEditPost } from '../_actions'
 
 class EditPost extends React.Component {
   constructor() {

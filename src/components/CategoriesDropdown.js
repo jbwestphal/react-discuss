@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { listAllCategories } from '../actions'
+import { listAllCategories } from '../_actions'
 
 class CategoriesDropdown extends React.Component {
 

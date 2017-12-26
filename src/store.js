@@ -1,8 +1,8 @@
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware, compose } from 'redux'
-import reducer from './reducers'
-import { listAllPosts, actionSortPosts } from './actions'
+import reducer from './_reducers'
+import { listAllPosts, actionSortPosts } from './_actions'
 
 const middleware = [ thunk ];
 if (process.env.NODE_ENV !== 'production') {

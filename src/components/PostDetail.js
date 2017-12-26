@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { convertTimeStamp, getRandomId } from '../utils'
 import If from './If'
 import CommentCard from './CommentCard'
-import { actionDispatchVote, actionDeletePost, actionAddComment } from '../actions'
+import { actionDispatchVote, actionDeletePost, actionAddComment } from '../_actions'
 
 class PostDetail extends React.Component {
 
