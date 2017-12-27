@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { actionDispatchVote, actionSortPosts } from '../_actions'
 import If from './If'
 import Post from './Post'
 
@@ -10,23 +8,23 @@ class PostList extends React.Component {
   render() {
 
     // getting the store up-to-date
-    const listAllPosts = this.props.listPosts
+    // const listAllPosts = this.props.listPosts
 
-    // getting props to define the filter
-    const postCategory = this.props.filter
+    // // getting props to define the filter
+    // const postCategory = this.props.filter
 
-    // conditional for list all posts or posts by categories
-    let listConditionalPosts = []
+    // // conditional for list all posts or posts by categories
+    // let listConditionalPosts = []
 
-    if(postCategory !== false) {
-      listConditionalPosts = listAllPosts && listAllPosts.filter((post) => {
-        return post.category === postCategory
-      })
-    } else {
-      listConditionalPosts = listAllPosts
-    }
+    // if(postCategory !== false) {
+    //   listConditionalPosts = listAllPosts && listAllPosts.filter((post) => {
+    //     return post.category === postCategory
+    //   })
+    // } else {
+    //   listConditionalPosts = listAllPosts
+    // }
 
-    const { voteOnPost, sortPost } = this.props
+    const { posts, voteOnPost, sortPost } = this.props
 
     return (
       <div className="row">
@@ -35,12 +33,13 @@ class PostList extends React.Component {
           <button className="btn" onClick={() => sortPost('byVoteScore')}>Order By VoteScore</button> &nbsp;
         </div>
 
-        {listConditionalPosts && listConditionalPosts.map((post, index) => (
+        {/* {listConditionalPosts && listConditionalPosts.map((post, index) => ( */}
+        {posts.map((post, index) => (
           <Post key={index} post={post} onClickVote={(vote) => voteOnPost({postId: post.id, vote: vote})} />
         ))}
 
-        <If test={listConditionalPosts && listConditionalPosts.length === 0}>
-          <p>No posts found in this category.</p>
+        <If test={posts.length === 0}>
+          <p>No posts found.</p>
         </If>
       </div>
     )
@@ -48,7 +47,7 @@ class PostList extends React.Component {
 }
 
 PostList.propTypes = {
-  listPosts: PropTypes.arrayOf(PropTypes.shape({
+  posts: PropTypes.arrayOf(PropTypes.shape({
     author: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
@@ -58,18 +57,9 @@ PostList.propTypes = {
     title: PropTypes.string.isRequired,
     voteScore: PropTypes.number.isRequired
   })).isRequired,
-  filter: PropTypes.bool.isRequired,
+  filter: PropTypes.string.isRequired,
   voteOnPost: PropTypes.func.isRequired,
   sortPost:  PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  listPosts: state.posts
-})
-
-const mapDispatchToProps = dispatch => ({
-  voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
-  sortPost: (sortKey) => dispatch(actionSortPosts(sortKey)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+export default PostList

@@ -20,7 +20,16 @@ export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const ADD_COMMENT_COUNT = 'ADD_COMMENT_COUNT'
 export const MINUS_COMMENT_COUNT = 'MINUS_COMMENT_COUNT'
 
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+
 /* ACTIONS CREATORS */
+
+export const setVisibilityFilter = filter => {
+  return {
+    type: SET_VISIBILITY_FILTER,
+    filter
+  }
+}
 
 // list categories
 export const recieveCategs = (categories) => ({

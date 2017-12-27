@@ -95,6 +95,15 @@ function posts (state = [], action) {
   }
 }
 
+function visibilityFilter (state = 'SHOW_ALL', action) {
+  switch (action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter
+    default:
+      return state
+  }
+}
+
 function comments (state = [], action) {
 
   const { comments, comment, result } = action
@@ -132,5 +141,5 @@ function comments (state = [], action) {
 }
 
 export default combineReducers({
-  postCategories, posts, comments,
+  postCategories, posts, comments, visibilityFilter
 })

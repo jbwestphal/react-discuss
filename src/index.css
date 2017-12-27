@@ -92,7 +92,7 @@ main {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  background: url('./icons/loading.gif') no-repeat center center;
+  background: url('./img/loading.gif') no-repeat center center;
 }
 
 .loading-wrapper-float {
