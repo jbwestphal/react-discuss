@@ -14,7 +14,8 @@ import {
     MINUS_COMMENT_COUNT,
     ADD_COMMENT_COUNT,
     EDIT_COMMENT,
-    SORT_POSTS
+    SET_VISIBILITY_FILTER,
+    SET_ACTIVE_CATEG
 } from '../_actions'
 
 function postCategories (state = [], action) {
@@ -60,7 +61,7 @@ function posts (state = [], action) {
       )
 
     case REMOVE_POST:
-      return state
+      return state.filter(item => (item.id !== action.result.id))
 
     case ADD_COMMENT_COUNT:
       return state.map(item =>
@@ -76,29 +77,6 @@ function posts (state = [], action) {
             : item
       )
 
-    case SORT_POSTS:
-      return (action.sortKey === 'byDate') ?
-        [...state].sort((a, b) => {
-          if(a.timestamp > b.timestamp) return -1
-          else if (a.timestamp < b.timestamp) return 1
-          else return 0
-        }) :
-        [...state].sort((a, b) => {
-          if(a.voteScore > b.voteScore) return -1
-          else if (a.voteScore < b.voteScore) return 1
-          else return 0
-        })
-
-
-    default:
-      return state
-  }
-}
-
-function visibilityFilter (state = 'SHOW_BY_VOTE', action) {
-  switch (action.type) {
-    case 'SET_VISIBILITY_FILTER':
-      return action.filter
     default:
       return state
   }
@@ -140,6 +118,24 @@ function comments (state = [], action) {
   }
 }
 
+function visibilityFilter (state = 'voteScore', action) {
+  switch (action.type) {
+    case SET_VISIBILITY_FILTER:
+      return action.filter
+    default:
+      return state
+  }
+}
+
+function activeCategory (state = 'SHOW_ALL', action) {
+  switch (action.type) {
+    case SET_ACTIVE_CATEG:
+      return action.category
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
-  postCategories, posts, comments, visibilityFilter
+  postCategories, posts, comments, visibilityFilter, activeCategory
 })

@@ -21,6 +21,7 @@ export const ADD_COMMENT_COUNT = 'ADD_COMMENT_COUNT'
 export const MINUS_COMMENT_COUNT = 'MINUS_COMMENT_COUNT'
 
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+export const SET_ACTIVE_CATEG = 'SET_ACTIVE_CATEG'
 
 /* ACTIONS CREATORS */
 
@@ -28,6 +29,13 @@ export const setVisibilityFilter = filter => {
   return {
     type: SET_VISIBILITY_FILTER,
     filter
+  }
+}
+
+export const setActiveCateg = category => {
+  return {
+    type: SET_ACTIVE_CATEG,
+    category
   }
 }
 

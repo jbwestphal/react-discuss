@@ -1,38 +1,36 @@
 import { connect } from 'react-redux'
-import { actionDispatchVote, setVisibilityFilter } from '../_actions'
+import { actionDispatchVote, actionDeletePost, setVisibilityFilter } from '../_actions'
 import PostList from '../components/PostList'
 
-const getVisiblePosts = (posts, filter) => {
-  switch (filter) {
-    case 'SHOW_BY_VOTE':
-      return [...posts].sort((a, b) => {
-          if(a.voteScore > b.voteScore) return -1
-          else if (a.voteScore < b.voteScore) return 1
-          else return 0
-        })
-    case 'SHOW_BY_DATE':
-      return [...posts].sort((a, b) => {
-          if(a.timestamp > b.timestamp) return -1
-          else if (a.timestamp < b.timestamp) return 1
-          else return 0
-        })
-    case 'SHOW_BY_COMMENTS':
-      return [...posts].sort((a, b) => {
-          if(a.commentCount > b.commentCount) return -1
-          else if (a.commentCount < b.commentCount) return 1
-          else return 0
-        })
+// const getPosts = (posts, field, activeCategory) => {
+//   switch (activeCategory) {
+//     case ALL_POSTS:
+//       return posts.slice().sort((a, b) => b[field] - a[field]);
+//     default:
+//       return posts
+//         .filter(post => post.category === activeCategory)
+//         .sort((a, b) => b[field] - a[field]);
+//   }
+// }
+
+const getSortedPosts = (posts, filter, category) => {
+  switch (category) {
+    case "SHOW_ALL":
+      return [...posts].sort((a, b) => b[filter] - a[filter]);
     default:
       return posts
+        .filter(post => post.category === category)
+        .sort((a, b) => b[filter] - a[filter])
   }
 }
 
 const mapStateToProps = state => ({
-  posts: getVisiblePosts(state.posts, state.visibilityFilter)
+  posts: getSortedPosts(state.posts, state.visibilityFilter, state.activeCategory)
 })
 
 const mapDispatchToProps = dispatch => ({
   voteOnPost: (postId, vote) => dispatch(actionDispatchVote(postId, vote)),
+  deletePost: (postId) => dispatch(actionDeletePost(postId)),
   sortPost: (filter) => dispatch(setVisibilityFilter(filter)),
 })
 

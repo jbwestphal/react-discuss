@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Application like Reddit. The users can create posts, filter by categories, create comments and rate posts.
+Application like Reddit. The users can create posts, rate, filter by categories and create comments.
 
 ## Start Developing
 
@@ -23,4 +23,4 @@ Application like Reddit. The users can create posts, filter by categories, creat
 
 ## Credits
 
-Made with [Create React App](https://github.com/facebookincubator/create-react-app), Redux, React-router and Materialize
+Made with [Create React App](https://github.com/facebookincubator/create-react-app), Redux, React-router v4 and Materialize

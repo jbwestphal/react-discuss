@@ -1,15 +1,28 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { setActiveCateg } from '../_actions'
 import VisiblePostList from '../containers/VisiblePostList'
 
-const ByCategory = (props) => {
-	return (
-		<section className="page">
-			<div className="row">
-				<h4 className="page-title col s12">Posts in category "{props.categoryPath}"</h4>
-				<VisiblePostList filter={props.categoryPath} />
-			</div>
-		</section>
-	)
+class ByCategory extends React.Component {
+
+	componentDidMount() {
+		this.props.activeCateg(this.props.categoryPath)
+	}
+
+	render() {
+		return (
+			<section className="page">
+				<div className="row">
+					<h4 className="page-title col s12">Posts in category "{this.props.categoryPath}"</h4>
+					<VisiblePostList />
+				</div>
+			</section>
+		)
+	}
 }
 
-export default ByCategory
+const mapDispatchToProps = dispatch => ({
+  activeCateg: (category) => dispatch(setActiveCateg(category)),
+})
+
+export default connect(null,mapDispatchToProps)(ByCategory)

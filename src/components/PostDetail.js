@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import PropTypes from 'prop-types'
-import { convertTimeStamp, getRandomId } from '../utils'
+import { getRandomId } from '../utils'
 import If from './If'
+import Post from './Post'
 import CommentCard from './CommentCard'
 import { actionDispatchVote, actionDeletePost, actionAddComment } from '../_actions'
 
@@ -45,9 +46,7 @@ class PostDetail extends React.Component {
 		const { voteOnPost, listComments, postId } = this.props
 		const { loadingPost, loadingComment } = this.state
 
-		let listPostDetail = this.props.listPostDetail
-
-		listPostDetail = listPostDetail && listPostDetail.filter((post) => {
+		const post = this.props.post.filter((post) => {
 			return post.id === postId
 		})
 
@@ -63,31 +62,17 @@ class PostDetail extends React.Component {
 						<Link to="/" className="waves-effect waves-light blue darken-1 btn"><i className="material-icons">arrow_back</i> Go back</Link>
 					</div>
 					{
-						listPostDetail && listPostDetail.map((post) => (
+						post.map((post, index) => (
 							<div className="row" key={post.id}>
-								<div className="col s12">
-									<section className="card grey lighten-4">
-										<article className="card-content">
-											<header className="card-title orange-text">{post.title}</header>
-											<p>
-												<span className="grey-text">Published in:</span> {convertTimeStamp(post.timestamp)} &nbsp; | &nbsp;
-												<span className="grey-text">Author:</span> {post.author} &nbsp; | &nbsp;
-												<span className="grey-text">Category:</span> {post.category}
-											</p>
-											<section className="section">
-												<p className="flow-text">{post.body}</p>
-											</section>
-										</article>
-										<div className="card-action">
-											<span className="btn-floating green" onClick={() => voteOnPost({postId: post.id, vote: "upVote"})}><i className="material-icons">thumb_up</i></span> &nbsp;
-											<span className="btn-floating red" onClick={() => voteOnPost({postId: post.id, vote: "downVote"})}><i className="material-icons">thumb_down</i></span> &nbsp;
-											<span>{post.voteScore} vote(s)</span> &nbsp;
-											<Link to={`/posts/${post.id}/edit`} type="button" className="waves-effect waves-light btn">Edit</Link> &nbsp;
-											<button type="button" className="waves-effect waves-light btn deep-orange darken-4" onClick={() => this.handleDeletePost(post.id)}>Delete</button>
-										</div>
-									</section>
-								</div>
-
+								<Post
+									key={index}
+									post={post}
+									width="l12"
+									btnDetail={false}
+									truncate={false}
+									onClickVote={(vote) => voteOnPost({postId: post.id, vote: vote})}
+									onDeletePost={() => this.handleDeletePost(post.id)}
+								/>
 								<div className="col s12">
 									<h5 className="grey-text">{post.commentCount} post's comments</h5>
 									<div className="row">
@@ -127,7 +112,7 @@ class PostDetail extends React.Component {
 }
 
 PostDetail.propTypes = {
-  listPostDetail: PropTypes.arrayOf(PropTypes.shape({
+  post: PropTypes.arrayOf(PropTypes.shape({
     author: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
@@ -140,7 +125,7 @@ PostDetail.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  listPostDetail: state.posts
+  post: state.posts
 })
 
 const mapDispatchToProps = dispatch => ({

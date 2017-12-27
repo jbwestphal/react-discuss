@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import serializeForm from 'form-serialize'
-import { createSelector } from 'reselect'
-import Modal from './Modal'
 import { convertTimeStamp } from '../utils'
 import If from './If'
+import Modal from './Modal'
 import { actionListComments, actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../_actions'
 
 class CommentCard extends React.Component {
@@ -71,7 +70,7 @@ class CommentCard extends React.Component {
           {
             listComments && listComments.filter((item) => {
               return (item.parentId === parentId) && (item.deleted === false)
-            }).map(item => (
+            }).sort((a, b) => b['voteScore'] - a['voteScore']).map(item => (
               <div key={item.id} className="card grey lighten-5">
                 <div className="card-content">
                   <span className="card-title"><small>Comment by <strong>{item.author}</strong></small></span>
@@ -134,18 +133,8 @@ CommentCard.propTypes = {
   })).isRequired
 }
 
-// sort comments by most recent using Reselect library
-const getCommentsList = (state) => state;
-
-const selectorCommentsList = createSelector(
-  getCommentsList,
-  (list) => {
-  return list.sort((a, b) => a.timestamp + b.timestamp)
-  }
-)
-
 const mapStateToProps = state => ({
-  listComments: selectorCommentsList(state.comments)
+  listComments: state.comments
 })
 
 const mapDispatchToProps = dispatch => ({
