@@ -29,8 +29,9 @@ class PostList extends React.Component {
     return (
       <div className="row">
         <div className="col s12">
-          <button className="btn" onClick={() => sortPost('byDate')}>Order By Date</button> &nbsp;
-          <button className="btn" onClick={() => sortPost('byVoteScore')}>Order By VoteScore</button> &nbsp;
+          <button className="btn" onClick={() => sortPost('SHOW_BY_DATE')}>Order By Date</button> &nbsp;
+          <button className="btn" onClick={() => sortPost('SHOW_BY_VOTE')}>Order By VoteScore</button> &nbsp;
+          <button className="btn" onClick={() => sortPost('SHOW_BY_COMMENTS')}>Order By Comments</button> &nbsp;
         </div>
 
         {/* {listConditionalPosts && listConditionalPosts.map((post, index) => ( */}

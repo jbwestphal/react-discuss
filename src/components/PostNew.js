@@ -7,16 +7,27 @@ import CategoriesDropdown from './CategoriesDropdown'
 
 class NewPost extends React.Component {
 
+  constructor() {
+    super()
+    this.state = {
+      showLoader: false
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.goBack = this.goBack.bind(this)
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
-
     const values = serializeForm(e.target, { hash: true })
-
     this.props.createPost(values)
-
     if (this.props.onCreatePost)
       this.props.onCreatePost()
+  }
 
+  goBack() {
+    if (this.props.onCreatePost)
+      this.props.onCreatePost()
   }
 
   render() {
@@ -54,7 +65,7 @@ class NewPost extends React.Component {
                 <label className="active">Text</label>
               </div>
               <div className="input-field col s12 right-align">
-                <button type="button" className="waves-effect waves-light btn grey lighten-1">Clear</button> &nbsp;
+                <button type="button" className="waves-effect waves-light btn grey lighten-1" onClick={this.goBack}>Cancel</button> &nbsp;
                 <button type="submit" className="waves-effect waves-light btn">Publish</button>
               </div>
             </div>

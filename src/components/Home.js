@@ -6,7 +6,7 @@ const Home = () => {
     <section className="page">
       <div className="row">
         <h4 className="page-title col s12">List of Posts</h4>
-        <VisiblePostList filter={'SHOW_ALL'} />
+        <VisiblePostList />
       </div>
     </section>
   )

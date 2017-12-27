@@ -95,7 +95,7 @@ function posts (state = [], action) {
   }
 }
 
-function visibilityFilter (state = 'SHOW_ALL', action) {
+function visibilityFilter (state = 'SHOW_BY_VOTE', action) {
   switch (action.type) {
     case 'SET_VISIBILITY_FILTER':
       return action.filter
