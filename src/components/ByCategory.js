@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { setActiveCateg } from '../_actions'
 import VisiblePostList from '../containers/VisiblePostList'
 
@@ -19,6 +20,11 @@ class ByCategory extends React.Component {
 			</section>
 		)
 	}
+}
+
+ByCategory.propTypes = {
+  activeCateg: PropTypes.func.isRequired,
+  categoryPath: PropTypes.string.isRequired
 }
 
 const mapDispatchToProps = dispatch => ({

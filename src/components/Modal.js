@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './styles/Modal.css'
 
 const Modal = (props) => {
@@ -21,6 +22,10 @@ const Modal = (props) => {
       </div>
     </div>
 	)
+}
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool
 }
 
 export default Modal
