@@ -6,7 +6,7 @@ import { getRandomId } from '../utils'
 import { actionAddPost } from '../_actions'
 import CategoriesDropdown from './CategoriesDropdown'
 
-class NewPost extends React.Component {
+export class PostNew extends React.Component {
 
   constructor() {
     super()
@@ -74,7 +74,7 @@ class NewPost extends React.Component {
   }
 }
 
-NewPost.propTypes = {
+PostNew.propTypes = {
 	onCreatePost: PropTypes.func.isRequired,
   createPost: PropTypes.func.isRequired
 }
@@ -83,4 +83,4 @@ const mapDispatchToProps = dispatch => ({
   createPost: (post) => dispatch(actionAddPost(post)),
 });
 
-export default connect(null, mapDispatchToProps)(NewPost)
+export default connect(null, mapDispatchToProps)(PostNew)

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { setActiveCateg } from '../_actions'
 import VisiblePostList from '../containers/VisiblePostList'
 
-class Home extends React.Component {
+export class Home extends React.Component {
 
 	componentDidMount() {
 		this.props.activeCateg('SHOW_ALL')

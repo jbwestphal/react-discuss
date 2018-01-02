@@ -2,17 +2,6 @@ import { connect } from 'react-redux'
 import { actionDispatchVote, actionDeletePost, setVisibilityFilter } from '../_actions'
 import PostList from '../components/PostList'
 
-// const getPosts = (posts, field, activeCategory) => {
-//   switch (activeCategory) {
-//     case ALL_POSTS:
-//       return posts.slice().sort((a, b) => b[field] - a[field]);
-//     default:
-//       return posts
-//         .filter(post => post.category === activeCategory)
-//         .sort((a, b) => b[field] - a[field]);
-//   }
-// }
-
 const getSortedPosts = (posts, filter, category) => {
   switch (category) {
     case "SHOW_ALL":

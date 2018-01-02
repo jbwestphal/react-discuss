@@ -2,7 +2,7 @@
   "name": "react-readable",
   "description": "An application for create posts and comments, using React and Redux",
   "author": "Jéssica Westphal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "form-serialize": "^0.7.2",

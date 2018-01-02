@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import If from './If'
 import { actionEditPost } from '../_actions'
 
-class PostEdit extends React.Component {
+export class PostEdit extends React.Component {
   constructor() {
     super()
     this.state = {

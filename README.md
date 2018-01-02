@@ -7,12 +7,12 @@ Application like Reddit. The users can create posts, rate, filter by categories 
 ## Start Developing
 
 * Running the app
-    In the project's root run the following commands:
+In the project's root run the following commands:
     - `npm install`
     - `npm start`
 
 * Running the server
-    To run the server, enter in to the project's folder *./api-server* and run the following commands:
+To run the server, enter in to the project's folder *api-server* and run the following commands:
     - `npm install`
     - `node server`
 

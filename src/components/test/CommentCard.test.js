@@ -4,7 +4,7 @@ import { CommentCard } from '../CommentCard'
 
 describe('<CommentCard />', () => {
   it('shallow without crashing', () => {
-    expect(shallow(<CommentCard listComments={
+    expect(shallow(<CommentCard parentId="" commentsPost={() => {}} listComments={
       [
         {
           id: 'JNS98SAMJA',

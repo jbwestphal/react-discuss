@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { convertTimeStamp } from '../utils'
 import If from './If'
 
-const Post = ({ onClickVote, onDeletePost, post, width, btnDetail, truncate }) => {
+export const Post = ({ onClickVote, onDeletePost, post, width, btnDetail, truncate }) => {
 
   return (
     <div className={`col s12 ${width}`}>

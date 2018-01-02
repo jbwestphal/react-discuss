@@ -131,7 +131,8 @@ CommentCard.propTypes = {
     deleted: PropTypes.bool.isRequired,
     parentDeleted: PropTypes.bool.isRequired
   })).isRequired,
-  commentsPost: PropTypes.func
+  parentId: PropTypes.string.isRequired,
+  commentsPost: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

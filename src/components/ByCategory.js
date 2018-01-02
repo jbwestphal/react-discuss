@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { setActiveCateg } from '../_actions'
 import VisiblePostList from '../containers/VisiblePostList'
 
-class ByCategory extends React.Component {
+export class ByCategory extends React.Component {
 
 	componentDidMount() {
 		this.props.activeCateg(this.props.categoryPath)
