@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
+import PropTypes from 'prop-types'
 import { getRandomId } from '../utils'
 import { actionAddPost } from '../_actions'
 import CategoriesDropdown from './CategoriesDropdown'
@@ -44,14 +45,12 @@ class NewPost extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input
-                  id="title" type="text" className="validate"
-                  name="title" />
+                  id="title" type="text" className="validate" name="title" required />
                 <label className="active">Title</label>
               </div>
               <div className="input-field col s6">
                 <input
-                  id="title" type="text" className="validate"
-                  name="author" />
+                  id="title" type="text" className="validate" name="author" required />
                 <label className="active">Author</label>
               </div>
               <div className="col s6">
@@ -60,8 +59,7 @@ class NewPost extends React.Component {
               </div>
               <div className="input-field col s12">
                 <textarea
-                  id="description" className="validate materialize-textarea"
-                  name="body" />
+                  id="description" className="validate materialize-textarea" name="body" required />
                 <label className="active">Text</label>
               </div>
               <div className="input-field col s12 right-align">
@@ -74,6 +72,11 @@ class NewPost extends React.Component {
       </section>
     )
   }
+}
+
+NewPost.propTypes = {
+	onCreatePost: PropTypes.func.isRequired,
+  createPost: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = dispatch => ({

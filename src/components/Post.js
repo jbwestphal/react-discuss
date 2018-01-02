@@ -23,9 +23,9 @@ const Post = ({ onClickVote, onDeletePost, post, width, btnDetail, truncate }) =
           <span className="btn-floating red" onClick={() => onClickVote("downVote")}><i className="material-icons">thumb_down</i></span> &nbsp;
           <span>{post.voteScore} vote(s)</span> &nbsp;
           <If test={btnDetail !== false}>
-            <Link to={`/posts/${post.id}`} className="btn orange lighten-1">+ Details</Link> &nbsp;
+            <Link to={`/${post.category}/${post.id}`} className="btn orange lighten-1">+ Details</Link> &nbsp;
           </If>
-          <Link to={`/posts/${post.id}/edit`} type="button" className="waves-effect waves-light btn">Edit</Link> &nbsp;
+          <Link to={`/${post.category}/${post.id}/edit`} type="button" className="waves-effect waves-light btn">Edit</Link> &nbsp;
           <button type="button" className="waves-effect waves-light btn deep-orange darken-4" onClick={() => onDeletePost(post.id)}>Delete</button>
         </div>
       </div>
@@ -44,7 +44,11 @@ Post.propTypes = {
     title: PropTypes.string.isRequired,
     voteScore: PropTypes.number.isRequired
   }).isRequired,
-  onClickVote: PropTypes.func.isRequired
+  onClickVote: PropTypes.func.isRequired,
+  onDeletePost: PropTypes.func.isRequired,
+  width: PropTypes.string.isRequired,
+  btnDetail: PropTypes.bool,
+  truncate: PropTypes.bool
 }
 
 export default Post

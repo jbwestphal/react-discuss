@@ -7,7 +7,7 @@ import If from './If'
 import Modal from './Modal'
 import { actionListComments, actionDeleteComment, actionDispatchVoteComment, actionEditComment } from '../_actions'
 
-class CommentCard extends React.Component {
+export class CommentCard extends React.Component {
 
 	constructor() {
     super()
@@ -130,7 +130,8 @@ CommentCard.propTypes = {
     voteScore: PropTypes.number.isRequired,
     deleted: PropTypes.bool.isRequired,
     parentDeleted: PropTypes.bool.isRequired
-  })).isRequired
+  })).isRequired,
+  commentsPost: PropTypes.func
 }
 
 const mapStateToProps = state => ({

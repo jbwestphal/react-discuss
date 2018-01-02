@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
+import PropTypes from 'prop-types'
 import If from './If'
 import { actionEditPost } from '../_actions'
 
-class EditPost extends React.Component {
+class PostEdit extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -59,18 +60,15 @@ class EditPost extends React.Component {
               <input id="id" type="hidden" name="id" defaultValue={post.id} />
               <div className="row">
                 <div className="input-field col s6">
-                  <input
-                    id="title" type="text" className="validate" name="title" defaultValue={post.title} />
+                  <input id="title" type="text" className="validate" name="title" defaultValue={post.title} required />
                   <label className="active">Title</label>
                 </div>
                 <div className="input-field col s6">
-                  <input
-                    id="title" type="text" className="validate" name="author" disabled defaultValue={post.author} />
+                  <input id="title" type="text" className="validate" name="author" disabled defaultValue={post.author} required />
                   <label className="active">Author</label>
                 </div>
                 <div className="input-field col s12">
-                  <textarea
-                    id="description" className="validate materialize-textarea" name="body" defaultValue={post.body} />
+                  <textarea id="description" className="validate materialize-textarea" name="body" defaultValue={post.body} required />
                   <label className="active">Text</label>
                 </div>
                 <div className="input-field col s12 right-align">
@@ -87,12 +85,24 @@ class EditPost extends React.Component {
   }
 }
 
+PostEdit.propTypes = {
+	onEditPost: PropTypes.func.isRequired,
+	listPostDetail: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  })).isRequired,
+	postId: PropTypes.string.isRequired,
+	categoryId: PropTypes.string.isRequired
+}
+
 const mapStateToProps = state => ({
   listPostDetail: state.posts
 })
 
 const mapDispatchToProps = dispatch => ({
-  editPost: (postId, post) => dispatch(actionEditPost(postId, post)),
+  editPost: (postId, post) => dispatch(actionEditPost(postId, post))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPost)
+export default connect(mapStateToProps, mapDispatchToProps)(PostEdit)

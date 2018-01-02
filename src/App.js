@@ -31,29 +31,30 @@ const MainApp = (props) => {
 
               <Route exact path="/" component={Home} />
 
-              <Route exact path="/posts/:postId" render={({match}) => (
-                <PostDetail postId={match.params.postId} />
+              <Route exact path="/:categoryId/:postId" render={({match}) => (
+                <PostDetail categoryId={match.params.categoryId} postId={match.params.postId} />
               )} />
 
-              <Route path="/posts/:postId/edit" render={({match, history}) => (
+              <Route exact path="/:categoryId/:postId/edit" render={({match, history}) => (
                 <PostEdit
                 postId={match.params.postId}
+                categoryId={match.params.categoryId}
                 onEditPost={() => {
-                    history.push(`/posts/${match.params.postId}`)
+                    history.push(`/${match.params.categoryId}/${match.params.postId}`)
                   }}
                 />
               )} />
 
-              <Route path="/:categoryPath/posts" render={({match}) => (
-                <ByCategory categoryPath={match.params.categoryPath} />
-              )} />
-
-              <Route path="/new-post" render={({ history }) => (
+              <Route exact path="/new-post" render={({ history }) => (
                 <PostNew
                   onCreatePost={() => {
                     history.push('/')
                   }}
                 />
+              )} />
+
+              <Route path="/:categoryPath" render={({match}) => (
+                <ByCategory categoryPath={match.params.categoryPath} />
               )} />
 
             </Switch>

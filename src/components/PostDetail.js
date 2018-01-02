@@ -9,7 +9,7 @@ import Post from './Post'
 import CommentCard from './CommentCard'
 import { actionDispatchVote, actionDeletePost, actionAddComment } from '../_actions'
 
-class PostDetail extends React.Component {
+export class PostDetail extends React.Component {
 
 	constructor () {
     super();
@@ -61,50 +61,57 @@ class PostDetail extends React.Component {
 					<div className="section">
 						<Link to="/" className="waves-effect waves-light blue darken-1 btn"><i className="material-icons">arrow_back</i> Go back</Link>
 					</div>
-					{
-						post.map((post, index) => (
-							<div className="row" key={post.id}>
-								<Post
-									key={index}
-									post={post}
-									width="l12"
-									btnDetail={false}
-									truncate={false}
-									onClickVote={(vote) => voteOnPost({postId: post.id, vote: vote})}
-									onDeletePost={() => this.handleDeletePost(post.id)}
-								/>
-								<div className="col s12">
-									<h5 className="grey-text">{post.commentCount} post's comments</h5>
-									<div className="row">
-										<form className="col s12 m6 form-comment-post" name="formComment" onSubmit={this.handleCommentSubmit}>
-											<input type="hidden" name="id" defaultValue={getRandomId()} />
-											<input type="hidden" name="timestamp" defaultValue={timestamp} />
-											<input type="hidden" name="parentId" defaultValue={post.id} />
-											<div className="row">
-												<div className="input-field col s12">
-													<input id="title" type="text" className="validate" name="author" />
-													<label className="active">Author</label>
+					<If test={ post.length !== 0 }>
+						{
+							post.map((post, index) => (
+								<div className="row" key={post.id}>
+									<Post
+										key={index}
+										post={post}
+										width="l12"
+										btnDetail={false}
+										truncate={false}
+										onClickVote={(vote) => voteOnPost({postId: post.id, vote: vote})}
+										onDeletePost={() => this.handleDeletePost(post.id)}
+									/>
+									<div className="col s12">
+										<h5 className="grey-text">{post.commentCount} post's comments</h5>
+										<div className="row">
+											<form className="col s12 m6 form-comment-post" name="formComment" onSubmit={this.handleCommentSubmit}>
+												<input type="hidden" name="id" defaultValue={getRandomId()} />
+												<input type="hidden" name="timestamp" defaultValue={timestamp} />
+												<input type="hidden" name="parentId" defaultValue={post.id} />
+												<div className="row">
+													<div className="input-field col s12">
+														<input id="title" type="text" className="validate" name="author" />
+														<label className="active">Author</label>
+													</div>
+													<div className="input-field col s12">
+														<textarea id="description" className="validate materialize-textarea" name="body" />
+														<label className="active">Text</label>
+													</div>
+													<div className="input-field col s12 right-align">
+														<button type="submit" className="waves-effect waves-light btn">Publish</button>
+													</div>
 												</div>
-												<div className="input-field col s12">
-													<textarea id="description" className="validate materialize-textarea" name="body" />
-													<label className="active">Text</label>
-												</div>
-												<div className="input-field col s12 right-align">
-													<button type="submit" className="waves-effect waves-light btn">Publish</button>
-												</div>
-											</div>
-										</form>
-										<If test={ loadingComment === true }>
-											<div className="loading-wrapper">Loading...</div>
-										</If>
-										<If test={ loadingComment === false }>
-											<CommentCard listComments={listComments} parentId={postId} />
-										</If>
+											</form>
+											<If test={ loadingComment === true }>
+												<div className="loading-wrapper">Loading...</div>
+											</If>
+											<If test={ loadingComment === false }>
+												<CommentCard listComments={listComments} parentId={postId} />
+											</If>
+										</div>
 									</div>
 								</div>
-							</div>
-						))
-					}
+							))
+						}
+					</If>
+					<If test={ post.length === 0 }>
+						<section className="section">
+							<h4>Post not found, go back to home</h4>
+						</section>
+					</If>
 				</If>
 			</section>
 		)
@@ -121,7 +128,12 @@ PostDetail.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     voteScore: PropTypes.number.isRequired
-  })).isRequired
+  })).isRequired,
+	postId: PropTypes.string,
+	voteOnPost: PropTypes.func,
+	deletePost: PropTypes.func,
+	addCommentPost: PropTypes.func,
+	listComments: PropTypes.array
 }
 
 const mapStateToProps = state => ({
