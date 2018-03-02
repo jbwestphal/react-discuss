@@ -1,4 +1,4 @@
-const api = 'http://localhost:3001' || 'http://localhost:5001'
+const api = 'http://localhost:3001' || 'http://localhost:5001' || 'http://localhost:80'
 
 let token = localStorage.token
 
