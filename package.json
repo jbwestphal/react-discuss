@@ -20,6 +20,7 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
+    "preinstall": "npm install && node api-server/server",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
