@@ -4,6 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Application like Reddit. The users can create posts, rate, filter by categories and create comments.
 
+Application on Heroku: [See project](https://react-app-readable.herokuapp.com)
+
 ## Start Developing
 
 * Running the app
@@ -29,6 +31,7 @@ To run the server, enter in to the project's folder *api-server* and run the fol
   - Edit / Delete posts
   - Rate posts
   - Filter posts by categories
+  - Tests with Jest and Enzyme
   - A built-in server to save your posts and comments for navigation tests
 
 ## Credits
