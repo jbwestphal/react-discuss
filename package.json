@@ -3,12 +3,19 @@
   "version": "0.0.1",
   "description": "Root of react app discuss project",
   "license": "ISC",
+  "engines": {
+    "node": "8.9.4",
+    "npm": "5.6.x"
+  },
   "author": "Jessica Westphal",
   "dependencies": {
     "concurrently": "^3.5.1"
   },
   "scripts": {
     "install": "(cd client && npm) && (cd server && npm)",
-    "start": "concurrently \"cd client && PORT=3000 npm start\" \"cd server && PORT=3001 npm start\""
+    "start": "concurrently \"cd client && PORT=3000 npm start\" \"cd server && PORT=3001 npm start\"",
+    "build": "concurrently \"cd client && npm build\" \"cd server && npm build\"",
+    "start:prod": "cd server && npm start:prod",
+    "heroku-postbuild": "yarn build"
   }
 }

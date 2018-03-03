@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -9,10 +10,13 @@ const posts = require('./posts')
 const comments = require('./comments')
 
 const app = express()
+const staticFiles = express.static(path.join(__dirname, '../../client/build'))
 
-app.set("port", process.env.PORT || 3001);
+app.set("port", process.env.PORT || 3001)
 
-app.use(express.static('public'))
+app.use(staticFiles)
+
+// app.use(express.static('public'))
 app.use(cors())
 
 
