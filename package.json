@@ -16,6 +16,6 @@
     "start": "concurrently \"cd client && PORT=3000 npm start\" \"cd server && PORT=3001 npm start\"",
     "build": "concurrently \"cd client && npm build\" \"cd server && npm build\"",
     "start:prod": "cd server && npm start:prod",
-    "heroku-postbuild": "yarn build"
+    "heroku-postbuild": "npm build"
   }
 }
