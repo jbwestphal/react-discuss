@@ -10,6 +10,8 @@ const comments = require('./comments')
 
 const app = express()
 
+app.set("port", process.env.PORT || 3001);
+
 app.use(express.static('public'))
 app.use(cors())
 
