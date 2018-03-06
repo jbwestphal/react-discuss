@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Application like Reddit. The users can create posts, rate, filter by categories and create comments.
 
-Application on Heroku: [See project](https://react-app-readable.herokuapp.com)
+Application on Heroku: [See project](https://react-app-discuss.herokuapp.com)
 
 ## Start Developing
 
