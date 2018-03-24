@@ -6,6 +6,11 @@ Application like Reddit. The users can create posts, rate, filter by categories 
 
 Application on Heroku: [See project](https://react-app-discuss.herokuapp.com)
 
+## Requirments
+
+- [Node.js](https://nodejs.org)
+- [NPM](https://www.npmjs.com/get-npm) ou [Yarn](https://yarnpkg.com)
+
 ## Start Developing
 
 * Running the app
