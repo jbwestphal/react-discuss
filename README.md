@@ -1,6 +1,7 @@
 ## React Discuss
 
 Application like Reddit. The users can create posts, rate, filter by categories and create comments.
+
 Application on Heroku: [See project](https://react-app-discuss.herokuapp.com)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
