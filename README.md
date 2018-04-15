@@ -6,12 +6,12 @@ Application on Heroku: [See project](https://react-app-discuss.herokuapp.com)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-## Requirments
+## Requirements
 
 - Install [Node.js](https://nodejs.org)
 - Install [NPM](https://www.npmjs.com/get-npm) or [Yarn](https://yarnpkg.com)
 
-## Start Developing
+## Start Develop
 
 * Running the server
     - $ `cd public`
