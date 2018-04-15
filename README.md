@@ -16,7 +16,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * Running the server
     - $ `cd public`
     - $ `npm install`
-    - $ `node server`
+    - $ `npm start`
 
 * Running the app
     - $ `cd public/client`

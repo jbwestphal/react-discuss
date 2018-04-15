@@ -2,7 +2,7 @@
   "name": "api-discuss",
   "version": "1.0.0",
   "main": "index.js",
-  "description": "An application for create posts and comments, using React and Redux",
+  "description": "An API for create posts and comments, using Nodejs",
   "license": "ISC",
   "author": "Jessica Westphal",
   "dependencies": {
